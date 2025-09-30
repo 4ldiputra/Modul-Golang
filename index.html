@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modul Pemrograman Dasar Golang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00ADD8 0%, #00758D 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #00ADD8 0%, #00758D 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .login-box h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        .login-box p {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-box input:focus {
+            outline: none;
+            border-color: #00ADD8;
+            box-shadow: 0 0 10px rgba(0, 173, 216, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #00ADD8, #00758D);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 173, 216, 0.3);
+        }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .login-hint {
+            margin-top: 20px;
+            color: #95a5a6;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00ADD8, #00758D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .navigation {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-item {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-item:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #00ADD8;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        p, li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            position: relative;
+            border-left: 4px solid #00ADD8;
+            white-space: pre;
+            line-height: 1.5;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-block::before {
+            content: "Go";
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: #00ADD8;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .code-block:hover {
+            background: #34495e;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #00ADD8;
+        }
+
+        .example-box {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-box h4 {
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: linear-gradient(135deg, #00ADD8, #00758D);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .progress-bar {
+            background: #ecf0f1;
+            height: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ADD8, #00758D);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .login-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h2>Akses Modul Pemrograman Golang</h2>
+            <p>Masukkan kode akses untuk melanjutkan pembelajaran</p>
+            <input type="password" id="accessCode" placeholder="Masukkan kode akses..." maxlength="20">
+            <button onclick="checkAccess()" class="login-btn">Masuk</button>
+            <div id="errorMessage" class="error-message">Kode akses tidak valid!</div>
+            <div class="login-hint">
+                <small>Hint: Kode terdiri dari 12 karakter (GO + tahun + kata kunci)</small>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainContent" class="container" style="display: none;">
+        <header>
+            <h1>Modul Pemrograman Dasar Golang</h1>
+            <p class="subtitle">Panduan Lengkap Belajar Go dari Dasar hingga Mahir</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p id="progressText">Progress: 0% (0/11)</p>
+        </header>
+
+        <nav class="navigation">
+            <div class="nav-grid">
+                <button class="nav-item active" onclick="showSection('pengenalan')">1. Pengenalan Go</button>
+                <button class="nav-item" onclick="showSection('variabel')">2. Variabel & Tipe Data</button>
+                <button class="nav-item" onclick="showSection('operator')">3. Operator</button>
+                <button class="nav-item" onclick="showSection('percabangan')">4. Percabangan</button>
+                <button class="nav-item" onclick="showSection('perulangan')">5. Perulangan</button>
+                <button class="nav-item" onclick="showSection('array')">6. Array & Slice</button>
+                <button class="nav-item" onclick="showSection('map')">7. Map</button>
+                <button class="nav-item" onclick="showSection('struct')">8. Struct</button>
+                <button class="nav-item" onclick="showSection('fungsi')">9. Fungsi</button>
+                <button class="nav-item" onclick="showSection('pointer')">10. Pointer & Method</button>
+                <button class="nav-item" onclick="showSection('proyek')">11. Proyek Akhir</button>
+            </div>
+        </nav>
+
+        <main class="content">
+            <section id="pengenalan" class="section active">
+    <h2>1. Pengenalan Golang</h2>
+    <h3>1.1 Definisi dan Sejarah</h3>
+    <div class="highlight">
+        <h4>Apa Itu Golang?</h4>
+        <p>Go (atau Golang) adalah bahasa pemrograman open-source yang dikembangkan oleh Google pada tahun 2007 dan dirilis ke publik pada tahun 2009. Diciptakan oleh Robert Griesemer, Rob Pike, dan Ken Thompson, Go dirancang untuk mengatasi masalah dalam pengembangan software skala besar.</p>
+    </div>
+
+    <h4>Keunggulan Go:</h4>
+    <ul>
+        <li>Kompilasi cepat dan performa tinggi</li>
+        <li>Concurrency yang mudah dengan goroutines</li>
+        <li>Garbage collection otomatis</li>
+        <li>Sintaks yang sederhana dan mudah dipelajari</li>
+        <li>Standard library yang lengkap</li>
+        <li>Cross-platform compilation</li>
+    </ul>
+
+    <h3>1.2 Instalasi Golang</h3>
+    <div class="highlight">
+        <h4>Instalasi di Windows</h4>
+        <ol>
+            <li>Kunjungi situs resmi <a href="https://go.dev/dl/" target="_blank">https://go.dev/dl/</a>.</li>
+            <li>Download installer Go untuk Windows (file <code>.msi</code>).</li>
+            <li>Jalankan installer dan ikuti instruksi hingga selesai.</li>
+            <li>Setelah selesai, buka Command Prompt lalu ketik:
+                <div class="code-block">go version</div>
+                Jika muncul versi Go, berarti instalasi berhasil.
+            </li>
+        </ol>
+    </div>
+
+    <div class="highlight">
+        <h4>Instalasi di macOS dengan Homebrew</h4>
+        <ol>
+            <li>Pastikan Homebrew sudah terpasang di sistem. Jika belum, install dengan perintah:
+                <div class="code-block">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+            </li>
+            <li>Install Go menggunakan brew:
+                <div class="code-block">brew install go</div>
+            </li>
+            <li>Cek instalasi dengan perintah:
+                <div class="code-block">go version</div>
+                Jika muncul versi Go, berarti instalasi berhasil.
+            </li>
+        </ol>
+    </div>
+
+    <h4>Program Hello World Pertama</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li>Install Go di komputer Anda</li>
+            <li>Jalankan program Hello World</li>
+            <li><strong>SOAL:</strong> Buatlah program untuk mencetak biodata diri Anda</li>
+        </ul>
+    </div>
+</section>
+
+
+
+            
+
+           <section id="variabel" class="section">
+    <h2>2. Variabel dan Tipe Data</h2>
+    
+    <h3>2.1 Pengenalan Variabel</h3>
+    <div class="code-block">
+        // Cara 1: var dengan tipe data
+        var name string = "John"
+
+        // Cara 2: var tanpa tipe (type inference)
+        var age = 25
+
+        // Cara 3: short declaration
+        city := "Jakarta"
+    </div>
+
+    <h3>2.2 Tipe Data Dasar</h3>
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Tipe Data</th>
+                <th>Kegunaan</th>
+                <th>Contoh</th>
+            </tr>
+            <tr>
+                <td>int, int8, int16, int32, int64</td>
+                <td>Bilangan bulat</td>
+                <td>42, -10</td>
+            </tr>
+            <tr>
+                <td>float32, float64</td>
+                <td>Bilangan desimal</td>
+                <td>3.14, -0.5</td>
+            </tr>
+            <tr>
+                <td>string</td>
+                <td>Teks/karakter</td>
+                <td>"Hello"</td>
+            </tr>
+            <tr>
+                <td>bool</td>
+                <td>Nilai boolean</td>
+                <td>true, false</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li><strong>SOAL 1:</strong> Buatlah program yang mendeklarasikan variabel untuk data mahasiswa (nama, NIM, IPK, status aktif) dan menghasilkan outputnya saja</li>
+        </ul>
+    </div>
+
+    <h3>Contoh Penyelesaian (tanpa input)</h3>
+    <div class="code-block">
+        package main
+        import "fmt"
+
+        func main() {
+            var nama string = "Budi"
+            var nim string = "123456"
+            var ipk float32 = 3.75
+            var aktif bool = true
+
+            fmt.Println("--- Data Mahasiswa ---")
+            fmt.Println("Nama   :", nama)
+            fmt.Println("NIM    :", nim)
+            fmt.Println("IPK    :", ipk)
+            fmt.Println("Status :", aktif)
+        }
+    </div>
+
+    
+
+
+
+    <h3>2.3 Input dan Output</h3>
+    <p>
+        Dalam Go, untuk melakukan input/output biasanya menggunakan package <code>fmt</code>.
+    </p>
+    <div class="code-block">
+        package main
+        import "fmt"
+
+        func main() {
+            var name string
+            var age int
+
+            fmt.Print("Masukkan nama: ")
+            fmt.Scanln(&name)
+
+            fmt.Print("Masukkan umur: ")
+            fmt.Scanln(&age)
+
+            fmt.Println("Halo,", name, "umur Anda", age, "tahun")
+        }
+    </div>
+    <p>
+        <strong>Penjelasan:</strong>  
+        - <code>fmt.Print()</code> → menampilkan teks tanpa pindah baris.  
+        - <code>fmt.Println()</code> → menampilkan teks dengan pindah baris.  
+        - <code>fmt.Scanln(&variabel)</code> → membaca input dari user dan menyimpannya ke variabel.  
+    </p>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li><strong>SOAL 1:</strong>Buatlah program yang menggunakan inputan dan mendeklarasikan variabel untuk data mahasiswa (nama, NIM, IPK, status aktif)</li>
+            <li><strong>SOAL 2:</strong> Buat program yang menyimpan data barang di toko (nama barang, harga, jumlah stok, status tersedia), lalu cetak hasilnya.</li>
+        </ul>
+    </div>
+
+    <h3>Contoh Penyelesaian</h3>
+    <div class="code-block">
+        package main
+        import "fmt"
+
+        func main() {
+            var nama string
+            var nim string
+            var ipk float32
+            var aktif bool
+
+            fmt.Print("Masukkan Nama: ")
+            fmt.Scanln(&nama)
+
+            fmt.Print("Masukkan NIM: ")
+            fmt.Scanln(&nim)
+
+            fmt.Print("Masukkan IPK: ")
+            fmt.Scanln(&ipk)
+
+            fmt.Print("Apakah masih aktif (true/false): ")
+            fmt.Scanln(&aktif)
+
+            fmt.Println("\n--- Data Mahasiswa ---")
+            fmt.Println("Nama   :", nama)
+            fmt.Println("NIM    :", nim)
+            fmt.Println("IPK    :", ipk)
+            fmt.Println("Status :", aktif)
+        }
+    </div>
+
+    
+</section>
+
+
+
+
+
+
+
+
+
+
+
+            <section id="operator" class="section">
+                <h2>3. Operator</h2>
+                <h3>3.1 Operator Aritmatika</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    a := 12
+    b := 5
+    
+    fmt.Println("a + b =", a + b)
+    fmt.Println("a - b =", a - b)
+    fmt.Println("a * b =", a * b)
+    fmt.Println("a / b =", a / b)
+    fmt.Println("a % b =", a % b)
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah program kalkulator sederhana</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="percabangan" class="section">
+                <h2>4. Percabangan</h2>
+                <h3>4.1 IF Statement</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    angka := 10
+    
+    if angka % 2 == 0 {
+        fmt.Println("Bilangan genap")
+    } else {
+        fmt.Println("Bilangan ganjil")
+    }
+}</div>
+                <h3>4.2 Switch Statement</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    hari := 3
+    
+    switch hari {
+    case 1:
+        fmt.Println("Senin")
+    case 2:
+        fmt.Println("Selasa")
+    case 3:
+        fmt.Println("Rabu")
+    default:
+        fmt.Println("Hari lain")
+    }
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah program untuk menentukan kategori umur</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="perulangan" class="section">
+                <h2>5. Perulangan</h2>
+                <h3>5.1 For Loop</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // For loop standar
+    for i := 1; i <= 5; i++ {
+        fmt.Println(i)
+    }
+    
+    // For sebagai while
+    j := 1
+    for j <= 5 {
+        fmt.Println(j)
+        j++
+    }
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah program yang mencetak pola bintang segitiga</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="array" class="section">
+                <h2>6. Array & Slice</h2>
+                <h3>6.1 Array</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Deklarasi array
+    var numbers [5]int
+    fruits := [3]string{"Apple", "Banana", "Orange"}
+    
+    fmt.Println(numbers)
+    fmt.Println(fruits)
+}</div>
+                <h3>6.2 Slice</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Membuat slice
+    numbers := []int{1, 2, 3, 4, 5}
+    
+    // Append
+    numbers = append(numbers, 6, 7)
+    
+    fmt.Println(numbers)
+    fmt.Println("Length:", len(numbers))
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah program untuk menghitung rata-rata nilai siswa menggunakan slice</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="map" class="section">
+                <h2>7. Map</h2>
+                <h3>7.1 Pengertian Map</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Membuat map
+    ages := make(map[string]int)
+    ages["Alice"] = 25
+    ages["Bob"] = 30
+    
+    // Map literal
+    scores := map[string]int{
+        "Math": 90,
+        "English": 85,
+    }
+    
+    fmt.Println(ages)
+    fmt.Println(scores)
+    
+    // Mengecek keberadaan key
+    nilai, exists := scores["Math"]
+    if exists {
+        fmt.Println("Nilai Math:", nilai)
+    }
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah program kamus sederhana dengan map</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="struct" class="section">
+                <h2>8. Struct</h2>
+                <h3>8.1 Definisi Struct</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+type Person struct {
+    Name   string
+    Age    int
+    City   string
+}
+
+func main() {
+    person1 := Person{
+        Name: "Budi",
+        Age:  25,
+        City: "Jakarta",
+    }
+    
+    fmt.Println("Nama:", person1.Name)
+    fmt.Println("Umur:", person1.Age)
+}</div>
+                <h4>Nested Struct</h4>
+                <div class="code-block">package main
+
+import "fmt"
+
+type Address struct {
+    Street  string
+    City    string
+}
+
+type Employee struct {
+    Name    string
+    Age     int
+    Address Address
+}
+
+func main() {
+    emp := Employee{
+        Name: "Eko",
+        Age:  28,
+        Address: Address{
+            Street: "Jl. Merdeka",
+            City:   "Surabaya",
+        },
+    }
+    
+    fmt.Println("Nama:", emp.Name)
+    fmt.Println("Kota:", emp.Address.City)
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah struct untuk data buku dan program perpustakaan sederhana</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="fungsi" class="section">
+                <h2>9. Fungsi</h2>
+                <h3>9.1 Definisi Fungsi</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+// Fungsi dengan parameter dan return
+func add(a, b int) int {
+    return a + b
+}
+
+// Multiple return values
+func calculate(a, b int) (int, int) {
+    sum := a + b
+    diff := a - b
+    return sum, diff
+}
+
+func main() {
+    result := add(5, 3)
+    fmt.Println("5 + 3 =", result)
+    
+    sum, diff := calculate(10, 3)
+    fmt.Println("Sum:", sum, "Diff:", diff)
+}</div>
+                <h4>Variadic Functions</h4>
+                <div class="code-block">package main
+
+import "fmt"
+
+func sum(numbers ...int) int {
+    total := 0
+    for _, num := range numbers {
+        total += num
+    }
+    return total
+}
+
+func main() {
+    fmt.Println(sum(1, 2, 3))
+    fmt.Println(sum(1, 2, 3, 4, 5))
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah fungsi untuk menghitung luas dan keliling lingkaran</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="pointer" class="section">
+                <h2>10. Pointer & Method</h2>
+                <h3>10.1 Pointer</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    x := 42
+    var p *int = &x
+    
+    fmt.Println("Nilai x:", x)
+    fmt.Println("Alamat x:", &x)
+    fmt.Println("Pointer p:", p)
+    fmt.Println("Nilai dari p:", *p)
+    
+    *p = 100
+    fmt.Println("Nilai x setelah diubah:", x)
+}</div>
+                <h3>10.2 Method</h3>
+                <div class="code-block">package main
+
+import "fmt"
+
+type Rectangle struct {
+    Width  float64
+    Height float64
+}
+
+func (r Rectangle) Area() float64 {
+    return r.Width * r.Height
+}
+
+func (r *Rectangle) Scale(factor float64) {
+    r.Width *= factor
+    r.Height *= factor
+}
+
+func main() {
+    rect := Rectangle{Width: 10, Height: 5}
+    fmt.Println("Luas:", rect.Area())
+    
+    rect.Scale(2)
+    fmt.Println("Luas setelah scale:", rect.Area())
+}</div>
+                <div class="exercise-box">
+                    <h4>Latihan Praktek</h4>
+                    <ul>
+                        <li><strong>SOAL:</strong> Buatlah struct BankAccount dengan method deposit dan withdraw</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="proyek" class="section">
+                <h2>11. Proyek Akhir</h2>
+                <h3>Sistem Manajemen Perpustakaan</h3>
+                <div class="highlight">
+                    <p><strong>Tugas:</strong> Buatlah sistem manajemen perpustakaan menggunakan Go dengan fitur CRUD lengkap.</p>
+                </div>
+                <h4>Template Program</h4>
+                <div class="code-block">package main
+
+import (
+    "fmt"
+    "strings"
+)
+
+type Book struct {
+    ID        int
+    Title     string
+    Author    string
+    Year      int
+    Available bool
+}
+
+type Library struct {
+    Books  []Book
+    NextID int
+}
+
+func NewLibrary() *Library {
+    return &Library{
+        Books:  []Book{},
+        NextID: 1,
+    }
+}
+
+func (l *Library) AddBook(title, author string, year int) {
+    book := Book{
+        ID:        l.NextID,
+        Title:     title,
+        Author:    author,
+        Year:      year,
+        Available: true,
+    }
+    l.Books = append(l.Books, book)
+    l.NextID++
+    fmt.Println("Buku berhasil ditambahkan!")
+}
+
+func (l *Library) DisplayBooks() {
+    if len(l.Books) == 0 {
+        fmt.Println("Perpustakaan kosong")
+        return
+    }
+    
+    fmt.Println("\n=== DAFTAR BUKU ===")
+    for _, book := range l.Books {
+        status := "Tersedia"
+        if !book.Available {
+            status = "Dipinjam"
+        }
+        fmt.Printf("ID: %d | %s - %s (%d) [%s]\n", 
+            book.ID, book.Title, book.Author, book.Year, status)
+    }
+}
+
+func (l *Library) SearchBook(keyword string) []Book {
+    var results []Book
+    keyword = strings.ToLower(keyword)
+    
+    for _, book := range l.Books {
+        if strings.Contains(strings.ToLower(book.Title), keyword) ||
+           strings.Contains(strings.ToLower(book.Author), keyword) {
+            results = append(results, book)
+        }
+    }
+    return results
+}
+
+func (l *Library) BorrowBook(id int) {
+    for i := range l.Books {
+        if l.Books[i].ID == id {
+            if l.Books[i].Available {
+                l.Books[i].Available = false
+                fmt.Println("Buku berhasil dipinjam!")
+            } else {
+                fmt.Println("Buku sedang dipinjam")
+            }
+            return
+        }
+    }
+    fmt.Println("Buku tidak ditemukan")
+}
+
+func (l *Library) ReturnBook(id int) {
+    for i := range l.Books {
+        if l.Books[i].ID == id {
+            if !l.Books[i].Available {
+                l.Books[i].Available = true
+                fmt.Println("Buku berhasil dikembalikan!")
+            } else {
+                fmt.Println("Buku tidak sedang dipinjam")
+            }
+            return
+        }
+    }
+    fmt.Println("Buku tidak ditemukan")
+}
+
+func (l *Library) DeleteBook(id int) {
+    for i, book := range l.Books {
+        if book.ID == id {
+            l.Books = append(l.Books[:i], l.Books[i+1:]...)
+            fmt.Println("Buku berhasil dihapus!")
+            return
+        }
+    }
+    fmt.Println("Buku tidak ditemukan")
+}
+
+func showMenu() {
+    fmt.Println("\n=== SISTEM PERPUSTAKAAN ===")
+    fmt.Println("1. Tambah Buku")
+    fmt.Println("2. Tampilkan Semua Buku")
+    fmt.Println("3. Cari Buku")
+    fmt.Println("4. Pinjam Buku")
+    fmt.Println("5. Kembalikan Buku")
+    fmt.Println("6. Hapus Buku")
+    fmt.Println("0. Keluar")
+    fmt.Print("Pilih menu: ")
+}
+
+func main() {
+    library := NewLibrary()
+    
+    // Data awal
+    library.AddBook("Pemrograman Go", "John Doe", 2020)
+    library.AddBook("Web Development", "Jane Smith", 2021)
+    
+    var choice int
+    for {
+        showMenu()
+        fmt.Scan(&choice)
+        
+        switch choice {
+        case 1:
+            var title, author string
+            var year int
+            fmt.Print("Judul: ")
+            fmt.Scan(&title)
+            fmt.Print("Pengarang: ")
+            fmt.Scan(&author)
+            fmt.Print("Tahun: ")
+            fmt.Scan(&year)
+            library.AddBook(title, author, year)
+            
+        case 2:
+            library.DisplayBooks()
+            
+        case 3:
+            var keyword string
+            fmt.Print("Kata kunci: ")
+            fmt.Scan(&keyword)
+            results := library.SearchBook(keyword)
+            if len(results) == 0 {
+                fmt.Println("Buku tidak ditemukan")
+            } else {
+                for _, book := range results {
+                    fmt.Printf("ID: %d | %s - %s\n", book.ID, book.Title, book.Author)
+                }
+            }
+            
+        case 4:
+            var id int
+            fmt.Print("ID Buku: ")
+            fmt.Scan(&id)
+            library.BorrowBook(id)
+            
+        case 5:
+            var id int
+            fmt.Print("ID Buku: ")
+            fmt.Scan(&id)
+            library.ReturnBook(id)
+            
+        case 6:
+            var id int
+            fmt.Print("ID Buku: ")
+            fmt.Scan(&id)
+            library.DeleteBook(id)
+            
+        case 0:
+            fmt.Println("Terima kasih!")
+            return
+            
+        default:
+            fmt.Println("Pilihan tidak valid")
+        }
+    }
+}</div>
+                <div class="exercise-box">
+                    <h4>Petunjuk Pengerjaan:</h4>
+                    <ol>
+                        <li>Lengkapi semua method yang ada</li>
+                        <li>Tambahkan fitur sorting buku</li>
+                        <li>Buat method statistik perpustakaan</li>
+                        <li>Tambahkan validasi input</li>
+                        <li>Implementasikan error handling</li>
+                    </ol>
+                </div>
+                <div class="highlight">
+                    <h4>Kriteria Penilaian:</h4>
+                    <ul>
+                        <li><strong>Fungsionalitas (40%):</strong> Semua fitur berjalan dengan benar</li>
+                        <li><strong>Struktur Kode (25%):</strong> Penggunaan struct, method, dan slice</li>
+                        <li><strong>Error Handling (20%):</strong> Validasi input dan error handling</li>
+                        <li><strong>User Interface (15%):</strong> Menu yang user-friendly</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Modul Pemrograman Dasar Golang. Dibuat dengan ❤️ untuk pembelajaran.</p>
+            <p>Selamat belajar dan semoga sukses!</p>
+        </footer>
+    </div>
+
+    <script>
+        const ACCESS_CODE = "GO2024SECURE";
+        let completedSections = new Set();
+        const totalSections = 11;
+
+        function checkAccess() {
+            const inputCode = document.getElementById('accessCode').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+            
+            if (inputCode === ACCESS_CODE) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                sessionStorage.setItem('isAuthenticated', 'true');
+                completedSections.add('pengenalan');
+                updateProgress();
+                showNotification('Login berhasil! Selamat belajar!', 'success');
+            } else {
+                errorMessage.textContent = 'Kode akses tidak valid!';
+                errorMessage.style.display = 'block';
+                document.getElementById('accessCode').value = '';
+                document.getElementById('accessCode').focus();
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#27ae60' : '#00ADD8'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('accessCode').focus();
+            }, 500);
+        });
+
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
+                checkAccess();
+            }
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(300px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+
+            completedSections.add(sectionId);
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgress() {
+            const progress = (completedSections.size / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = 
+                `Progress: ${Math.round(progress)}% (${completedSections.size}/${totalSections})`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('.code-block');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent).then(() => {
+                        showNotification('Kode berhasil disalin!', 'success');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
