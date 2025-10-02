@@ -643,30 +643,266 @@ func main() {
 
 
 
-            <section id="operator" class="section">
-                <h2>3. Operator</h2>
-                <h3>3.1 Operator Aritmatika</h3>
-                <div class="code-block">package main
+           <!-- Section 3: Operator -->
+<section id="operator" class="section">
+    <h2>3. Operator</h2>
+
+    <h3>3.1 Operator Aritmatika</h3>
+
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Operator</th>
+                <th>Nama</th>
+                <th>Contoh</th>
+                <th>Hasil</th>
+            </tr>
+            <tr>
+                <td>+</td>
+                <td>Penjumlahan</td>
+                <td>5 + 3</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>-</td>
+                <td>Pengurangan</td>
+                <td>5 - 3</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>*</td>
+                <td>Perkalian</td>
+                <td>5 * 3</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>/</td>
+                <td>Pembagian</td>
+                <td>10 / 2</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>%</td>
+                <td>Modulo (sisa bagi)</td>
+                <td>8 % 3</td>
+                <td>2</td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>Contoh Program Operator Aritmatika</h4>
+    <div class="code-block">package main
 
 import "fmt"
 
 func main() {
     a := 12
     b := 5
-    
-    fmt.Println("a + b =", a + b)
-    fmt.Println("a - b =", a - b)
-    fmt.Println("a * b =", a * b)
-    fmt.Println("a / b =", a / b)
-    fmt.Println("a % b =", a % b)
+
+    fmt.Println("=== Operator Aritmatika ===")
+    fmt.Println("a + b =", a+b) // Penjumlahan
+    fmt.Println("a - b =", a-b) // Pengurangan
+    fmt.Println("a * b =", a*b) // Perkalian
+    fmt.Println("a / b =", a/b) // Pembagian (integer)
+    fmt.Println("a % b =", a%b) // Sisa bagi
 }</div>
-                <div class="exercise-box">
-                    <h4>Latihan Praktek</h4>
-                    <ul>
-                        <li><strong>SOAL:</strong> Buatlah program kalkulator sederhana</li>
-                    </ul>
-                </div>
-            </section>
+
+    <h3>3.2 Operator Perbandingan dan Logika</h3>
+
+    <h4>Operator Perbandingan</h4>
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Operator</th>
+                <th>Nama</th>
+                <th>Contoh</th>
+            </tr>
+            <tr>
+                <td>==</td>
+                <td>Sama dengan</td>
+                <td>a == b</td>
+            </tr>
+            <tr>
+                <td>!=</td>
+                <td>Tidak sama dengan</td>
+                <td>a != b</td>
+            </tr>
+            <tr>
+                <td>&lt;</td>
+                <td>Kurang dari</td>
+                <td>a &lt; b</td>
+            </tr>
+            <tr>
+                <td>&gt;</td>
+                <td>Lebih besar dari</td>
+                <td>a &gt; b</td>
+            </tr>
+            <tr>
+                <td>&lt;=</td>
+                <td>Kurang dari atau sama dengan</td>
+                <td>a &lt;= b</td>
+            </tr>
+            <tr>
+                <td>&gt;=</td>
+                <td>Lebih besar atau sama dengan</td>
+                <td>a &gt;= b</td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>Contoh Program Operator Perbandingan</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    a := 8
+    b := 10
+
+    fmt.Println("=== Operator Perbandingan ===")
+    fmt.Println("a == b :", a == b)
+    fmt.Println("a != b :", a != b)
+    fmt.Println("a > b  :", a > b)
+    fmt.Println("a < b  :", a < b)
+    fmt.Println("a >= b :", a >= b)
+    fmt.Println("a <= b :", a <= b)
+}</div>
+
+    <h4>Operator Logika</h4>
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Operator</th>
+                <th>Nama</th>
+                <th>Hasil</th>
+            </tr>
+            <tr>
+                <td>&&</td>
+                <td>AND</td>
+                <td>true jika kedua kondisi true</td>
+            </tr>
+            <tr>
+                <td>||</td>
+                <td>OR</td>
+                <td>true jika salah satu kondisi true</td>
+            </tr>
+            <tr>
+                <td>!</td>
+                <td>NOT</td>
+                <td>Membalikkan nilai kebenaran</td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>Contoh Program Operator Logika</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    x := true
+    y := false
+
+    fmt.Println("=== Operator Logika ===")
+    fmt.Println("x && y :", x && y) // AND
+    fmt.Println("x || y :", x || y) // OR
+    fmt.Println("!x     :", !x)     // NOT
+    fmt.Println("!y     :", !y)
+}</div>
+
+    <h4>Contoh Program Kalkulator Sederhana</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var num1, num2 float64
+    var operator string
+
+    fmt.Print("Enter first number: ")
+    fmt.Scan(&num1)
+
+    fmt.Print("Enter operator (+, -, *, /): ")
+    fmt.Scan(&operator)
+
+    fmt.Print("Enter second number: ")
+    fmt.Scan(&num2)
+
+    switch operator {
+    case "+":
+        fmt.Println("Result:", num1+num2)
+    case "-":
+        fmt.Println("Result:", num1-num2)
+    case "*":
+        fmt.Println("Result:", num1*num2)
+    case "/":
+        if num2 != 0 {
+            fmt.Println("Result:", num1/num2)
+        } else {
+            fmt.Println("Error: Division by zero")
+        }
+    default:
+        fmt.Println("Invalid operator")
+    }
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li>Buat program sederhana yang menggunakan operator-operator tersebut</li>
+            <li>Buat program untuk menghitung luas dan keliling persegi panjang menggunakan operator aritmatika</li>
+
+            <h4>Contoh Program Menghitung Luas dan Keliling Persegi Panjang</h4>
+    <div class="code-block">
+package main
+
+import "fmt"
+
+func main() {
+    panjang := 10
+    lebar := 5
+
+    luas := panjang * lebar
+    keliling := 2 * (panjang + lebar)
+
+    fmt.Println("Luas Persegi Panjang     =", luas)
+    fmt.Println("Keliling Persegi Panjang =", keliling)
+}
+    </div>
+
+            <li><strong>SOAL:</strong>Hitung rata-rata 3 bilangan</li>
+            <h4>Contoh Program Menghitung Rata-rata</h4>
+    <div class="code-block">
+package main
+
+import "fmt"
+
+func main() {
+    a, b, c := 80, 75, 90
+    rata := (a + b + c) / 3
+
+    fmt.Println("Bilangan:", a, b, c)
+    fmt.Println("Rata-rata =", rata)
+}
+
+    </div>
+        </ul>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+          
+            
+
+
+
+
 
             <section id="percabangan" class="section">
                 <h2>4. Percabangan</h2>
@@ -1203,7 +1439,7 @@ func main() {
     </div>
 
     <script>
-        const ACCESS_CODE = "GO2024SECURE";
+        const ACCESS_CODE = "GO2025SECURE";
         let completedSections = new Set();
         const totalSections = 11;
 
