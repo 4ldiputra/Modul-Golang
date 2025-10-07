@@ -904,48 +904,369 @@ func main() {
 
 
 
-            <section id="percabangan" class="section">
-                <h2>4. Percabangan</h2>
-                <h3>4.1 IF Statement</h3>
-                <div class="code-block">package main
+      <section id="percabangan" class="section">
+    <h2>4. Percabangan</h2>
+
+    <h3>4.1 IF, ELSE IF, ELSE</h3>
+
+    <div class="highlight">
+        <p>Percabangan digunakan untuk membuat keputusan dalam program berdasarkan kondisi tertentu.</p>
+    </div>
+
+    <h4>Struktur Dasar Percabangan IF-ELSE</h4>
+    <div class="code-block">if kondisi {
+    // Kode yang dijalankan jika kondisi true
+} else {
+    // Kode yang dijalankan jika kondisi false
+}</div>
+
+    <h4>Contoh Program Percabangan IF-ELSE</h4>
+    <div class="code-block">package main
 
 import "fmt"
 
 func main() {
-    angka := 10
-    
-    if angka % 2 == 0 {
-        fmt.Println("Bilangan genap")
+    var angka int
+    fmt.Print("Masukkan sebuah angka: ")
+    fmt.Scan(&angka)
+
+    if angka%2 == 0 {
+        fmt.Println("Angka genap")
     } else {
-        fmt.Println("Bilangan ganjil")
+        fmt.Println("Angka ganjil")
     }
 }</div>
-                <h3>4.2 Switch Statement</h3>
-                <div class="code-block">package main
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li>Implementasikan beberapa percabangan dalam program</li>
+            <li><strong>SOAL:</strong> Buatlah program dalam bahasa Go yang meminta pengguna memasukkan sebuah bilangan bulat. Program harus menentukan apakah bilangan tersebut positif atau negatif, kemudian menampilkan hasilnya ke layar.</li>
+        </ul>
+    </div>
+
+    <h4>Struktur Dasar Percabangan IF-ELSE IF-ELSE</h4>
+    <div class="code-block">if kondisi1 {
+    // Kode yang dijalankan jika kondisi1 true
+} else if kondisi2 {
+    // Kode yang dijalankan jika kondisi2 true
+} else {
+    // Kode yang dijalankan jika semua kondisi false
+}</div>
+
+    <h4>Contoh Program Percabangan IF-ELSE IF-ELSE</h4>
+    <div class="code-block">package main
 
 import "fmt"
 
 func main() {
-    hari := 3
-    
-    switch hari {
-    case 1:
-        fmt.Println("Senin")
-    case 2:
-        fmt.Println("Selasa")
-    case 3:
-        fmt.Println("Rabu")
-    default:
-        fmt.Println("Hari lain")
+    var num int
+    fmt.Print("Masukkan angka: ")
+    fmt.Scan(&num)
+
+    if num > 0 {
+        fmt.Println("Angka positif")
+    } else if num < 0 {
+        fmt.Println("Angka negatif")
+    } else {
+        fmt.Println("Angka nol")
     }
 }</div>
-                <div class="exercise-box">
-                    <h4>Latihan Praktek</h4>
-                    <ul>
-                        <li><strong>SOAL:</strong> Buatlah program untuk menentukan kategori umur</li>
-                    </ul>
-                </div>
-            </section>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li>Implementasikan beberapa percabangan dalam program</li>
+            <li><strong>SOAL:</strong> Buat program untuk menentukan kategori umur:
+            <br>&lt; 13 → Anak-anak
+            <br>13–17 → Remaja
+            <br>18–59 → Dewasa
+            <br>≥ 60 → Lansia</li>
+        </ul>
+    </div>
+
+    <h3>Contoh Kode</h3>
+    <div class="code-block">
+      package main
+
+import "fmt"
+
+func main() {
+    var umur int
+
+    fmt.Print("Masukkan umur Anda: ")
+    fmt.Scan(&umur)
+
+    if umur < 13 {
+        fmt.Println("Kategori: Anak-anak")
+    } else if umur >= 13 && umur <= 17 {
+        fmt.Println("Kategori: Remaja")
+    } else if umur >= 18 && umur <= 59 {
+        fmt.Println("Kategori: Dewasa")
+    } else if umur >= 60 {
+        fmt.Println("Kategori: Lansia")
+    } else {
+        fmt.Println("Umur tidak valid")
+    }
+}
+
+    </div>
+
+
+
+
+
+
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek Grade</h4>
+        <ul>
+            <li>Buat program penilaian sederhana dengan menggunakan percabangan if-else</li>
+            <li><strong>SOAL:</strong> Buatlah program yang menentukan grade berdasarkan nilai (A: 90–100, B: 80–89, C: 70–79, D: 60–69, E: &lt;60)</li>
+        </ul>
+    </div>
+
+
+
+     <h3>4.2 Nested IF Statement</h3>
+<p><em>Nested if</em> adalah percabangan <code>if</code> di dalam <code>if</code> lainnya. Biasanya digunakan untuk memeriksa lebih dari satu kondisi secara berurutan.</p>
+<div class="code-block">
+package main
+
+import "fmt"
+
+func main() {
+    ipk := 3.8
+    penghasilanOrtu := 3000000
+
+    if ipk >= 3.5 {
+        if penghasilanOrtu < 5000000 {
+            fmt.Println("Selamat, kamu berhak mendapatkan beasiswa!")
+        } else {
+            fmt.Println("IPK bagus, tapi penghasilan orang tua terlalu tinggi.")
+        }
+    } else {
+        fmt.Println("Maaf, IPK belum memenuhi syarat.")
+    }
+}
+</div>
+
+<div class="exercise-box">
+    <h4>Latihan Praktek</h4>
+    <ul>
+        <li><strong>SOAL:</strong> Buatlah program untuk menentukan status kelulusan siswa berdasarkan nilai dan persentase kehadiran.</li>
+        <li>Jika nilai < 75 → tampilkan <code>"Tidak lulus, nilai kurang dari 75."</code></li>
+        <li>Jika nilai ≥ 75 dan kehadiran ≥ 80 → tampilkan <code>"Lulus dengan baik."</code></li>
+        <li>Jika nilai ≥ 75 tetapi kehadiran < 80 → tampilkan <code>"Nilai cukup, tapi kehadiran kurang."</code></li>
+    </ul>
+</div>
+
+
+
+
+
+
+
+    <h3>4.3 Switch Case</h3>
+
+    <p>Switch case digunakan untuk percabangan multi-kondisi yang lebih efisien daripada if-else bertingkat.</p>
+
+    <h4>Struktur Dasar Switch Case</h4>
+    <div class="code-block">switch ekspresi {
+case nilai1:
+    // kode jika ekspresi == nilai1
+case nilai2:
+    // kode jika ekspresi == nilai2
+default:
+    // kode jika tidak ada yang cocok
+}</div>
+
+    <h4>Contoh Switch Case Sederhana</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var pilihan int
+    fmt.Print("Pilih menu (1-3): ")
+    fmt.Scan(&pilihan)
+
+    switch pilihan {
+    case 1:
+        fmt.Println("Anda memilih menu 1")
+    case 2:
+        fmt.Println("Anda memilih menu 2")
+    case 3:
+        fmt.Println("Anda memilih menu 3")
+    default:
+        fmt.Println("Pilihan tidak valid")
+    }
+}</div>
+
+    <h4>Contoh Switch Case dengan percabangan IF-ELSE</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var menu, nilai int
+    fmt.Print("Pilih mata pelajaran (1=Matematika, 2=Bahasa): ")
+    fmt.Scan(&menu)
+
+    switch menu {
+    case 1:
+        fmt.Print("Masukkan nilai Matematika: ")
+        fmt.Scan(&nilai)
+
+        if nilai >= 75 {
+            fmt.Println("Lulus Matematika")
+        } else {
+            fmt.Println("Tidak lulus Matematika")
+        }
+
+    case 2:
+        fmt.Print("Masukkan nilai Bahasa: ")
+        fmt.Scan(&nilai)
+
+        if nilai >= 70 {
+            fmt.Println("Lulus Bahasa")
+        } else {
+            fmt.Println("Tidak lulus Bahasa")
+        }
+
+    default:
+        fmt.Println("Pilihan tidak valid")
+    }
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li>Implementasikan switch case dalam program</li>
+            <li><strong>SOAL:</strong> Buatlah program dalam bahasa Go yang menampilkan pilihan buah:
+            <br>1. Apel
+            <br>2. Jeruk
+            <br>Jika pengguna memilih Apel, minta input harga. Jika harga &gt; 20000 tampilkan "Apel mahal", selain itu "Apel terjangkau".
+            <br>Jika pengguna memilih Jeruk, minta input harga. Jika harga &gt; 15000 tampilkan "Jeruk mahal", selain itu "Jeruk terjangkau".
+            <br>Jika pengguna memilih selain 1 atau 2, tampilkan "Pilihan tidak valid".</li>
+        </ul>
+    </div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek Lanjutan</h4>
+        <ul>
+            <li><strong>SOAL:</strong> Seorang penumpang ingin membeli tiket kereta api. 
+            <br>Terdapat tiga pilihan kelas tiket:
+            <br>1. Ekonomi (Rp100.000)
+            <br>2. Bisnis (Rp200.000)
+            <br>3. Eksekutif (Rp300.000)
+            <br><br>Buat program yang:
+            <br>- Menampilkan daftar kelas
+            <br>- Meminta pengguna memilih kelas (1/2/3)
+            <br>- Meminta jumlah tiket
+            <br>- Menghitung total harga sesuai kelas dan jumlah
+            <br><br>Ketentuan:
+            <br>- Total &gt; 500000 untuk Ekonomi → "Tiket Ekonomi mahal"
+            <br>- Total &gt; 1000000 untuk Bisnis → "Tiket Bisnis mahal"
+            <br>- Total &gt; 1500000 untuk Eksekutif → "Tiket Eksekutif mahal"
+            <br>- Selain itu tampilkan “terjangkau”
+            <br>- Jika pilihan salah → “Pilihan tidak valid”</li>
+        </ul>
+    </div>
+
+    <h4>Contoh Kode</h4>
+    <div class="code-block">
+package main
+
+import "fmt"
+
+func main() {
+    var pilihan, jumlah int
+    var harga, total int
+
+    fmt.Println("=== PEMBELIAN TIKET KERETA API ===")
+    fmt.Println("1. Ekonomi   - Rp100.000")
+    fmt.Println("2. Bisnis    - Rp200.000")
+    fmt.Println("3. Eksekutif - Rp300.000")
+    fmt.Print("Pilih kelas tiket (1/2/3): ")
+    fmt.Scan(&pilihan)
+
+    switch pilihan {
+    case 1:
+        harga = 100000
+        fmt.Print("Masukkan jumlah tiket: ")
+        fmt.Scan(&jumlah)
+        total = harga * jumlah
+        fmt.Println("Total harga: Rp", total)
+
+        if total > 500000 {
+            fmt.Println("Tiket Ekonomi mahal")
+        } else {
+            fmt.Println("Tiket Ekonomi terjangkau")
+        }
+
+    case 2:
+        harga = 200000
+        fmt.Print("Masukkan jumlah tiket: ")
+        fmt.Scan(&jumlah)
+        total = harga * jumlah
+        fmt.Println("Total harga: Rp", total)
+
+        if total > 1000000 {
+            fmt.Println("Tiket Bisnis mahal")
+        } else {
+            fmt.Println("Tiket Bisnis terjangkau")
+        }
+
+    case 3:
+        harga = 300000
+        fmt.Print("Masukkan jumlah tiket: ")
+        fmt.Scan(&jumlah)
+        total = harga * jumlah
+        fmt.Println("Total harga: Rp", total)
+
+        if total > 1500000 {
+            fmt.Println("Tiket Eksekutif mahal")
+        } else {
+            fmt.Println("Tiket Eksekutif terjangkau")
+        }
+
+    default:
+        fmt.Println("Pilihan tidak valid!")
+    }
+}
+
+    </div>
+
+    <div class="exercise-box">
+    <h4>Latihan Praktek</h4>
+    <ul>
+        <li>Implementasikan switch case dalam program</li>
+        <li><strong>SOAL:</strong> Sebuah bioskop menjual tiket dengan tiga jenis kategori:
+        <br>1. Reguler dengan harga Rp50.000 per tiket.
+        <br>2. VIP dengan harga Rp100.000 per tiket.
+        <br>3. VVIP dengan harga Rp150.000 per tiket.
+        <br><br>Buatlah program dalam bahasa C++ yang:
+        <br>- Menampilkan daftar pilihan tiket.
+        <br>- Meminta pengguna memilih jenis tiket (1/2/3).
+        <br>- Meminta jumlah tiket yang ingin dibeli.
+        <br>- Menghitung total harga sesuai pilihan.
+        <br><br>Dengan ketentuan:
+        <br>- Reguler → mahal jika total > Rp200.000, selain itu tampilkan "Tiket Reguler terjangkau".
+        <br>- VIP → mahal jika total > Rp400.000, selain itu tampilkan "Tiket VIP terjangkau".
+        <br>- VVIP → mahal jika total > Rp600.000, selain itu tampilkan "Tiket VVIP terjangkau".
+        <br>- Jika pengguna memilih selain 1–3, tampilkan "Pilihan tidak valid".</li>
+    </ul>
+</div>
+
+</section>
+
+
+
+
+
+
+
 
             <section id="perulangan" class="section">
                 <h2>5. Perulangan</h2>
