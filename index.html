@@ -1266,35 +1266,328 @@ func main() {
 
 
 
-
-
             <section id="perulangan" class="section">
-                <h2>5. Perulangan</h2>
-                <h3>5.1 For Loop</h3>
-                <div class="code-block">package main
+    <h2>5. Perulangan</h2>
+
+    <h3>5.1 For Loop</h3>
+    
+    <div class="highlight">
+        <p>Di Golang, hanya ada satu jenis loop yaitu <strong>for loop</strong>. Namun, for loop di Go sangat fleksibel dan bisa digunakan untuk berbagai keperluan perulangan.</p>
+    </div>
+
+    <h4>Struktur For Loop</h4>
+    <div class="code-block">for inisialisasi; kondisi; increment/decrement {
+    // Kode yang akan diulang
+}</div>
+
+    <h4>Contoh For Loop Ascending (1, 2, 3, 4, 5)</h4>
+    <div class="code-block">package main
 
 import "fmt"
 
 func main() {
-    // For loop standar
+    // Mencetak angka 1-5
     for i := 1; i <= 5; i++ {
-        fmt.Println(i)
+        fmt.Print(i, " ")
     }
-    
-    // For sebagai while
+    fmt.Println()
+}</div>
+
+    <h4>Contoh For Loop Descending (5, 4, 3, 2, 1)</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Mencetak angka 5-1
+    for i := 5; i >= 1; i-- {
+        fmt.Print(i, " ")
+    }
+    fmt.Println()
+}</div>
+
+    <h4>Latihan For Loop dari 1 sampai 100 Ascending</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Ascending (1 sampai 100)
+    fmt.Println("Ascending (1 ke 100):")
+    for i := 1; i <= 100; i++ {
+        fmt.Print(i, " ")
+    }
+    fmt.Println()
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li>Buat program yang menggunakan berbagai jenis perulangan</li>
+            <li><strong>SOAL:</strong> Buatlah program Descending (100 ke 1)</li>
+        </ul>
+    </div>
+
+    <h3>5.2 For sebagai While dan Do-While Loop</h3>
+
+    <h4>For Loop sebagai While Loop</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
     j := 1
     for j <= 5 {
-        fmt.Println(j)
+        fmt.Print(j, " ")
         j++
     }
+    fmt.Println()
 }</div>
-                <div class="exercise-box">
-                    <h4>Latihan Praktek</h4>
-                    <ul>
-                        <li><strong>SOAL:</strong> Buatlah program yang mencetak pola bintang segitiga</li>
-                    </ul>
-                </div>
-            </section>
+
+    <h4>For Loop sebagai Do-While Loop</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    k := 1
+    for {
+        fmt.Print(k, " ")
+        k++
+        if k > 5 {
+            break
+        }
+    }
+    fmt.Println()
+}</div>
+
+    <h4>Contoh penggunaan for dengan switch-case</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var pilihan int
+
+    for {
+        // Menampilkan menu
+        fmt.Println("=== Menu Sederhana ===")
+        fmt.Println("1. Cetak Hello")
+        fmt.Println("2. Cetak Dunia")
+        fmt.Println("3. Keluar")
+        fmt.Print("Masukkan pilihan: ")
+        fmt.Scan(&pilihan)
+
+        // Switch-case untuk mengeksekusi pilihan
+        switch pilihan {
+        case 1:
+            fmt.Println("Hello!")
+        case 2:
+            fmt.Println("Dunia!")
+        case 3:
+            fmt.Println("Keluar dari program.")
+        default:
+            fmt.Println("Pilihan tidak valid!")
+        }
+
+        fmt.Println() // Tambahkan baris kosong untuk rapi
+
+        if pilihan == 3 {
+            break // Keluar dari loop
+        }
+    }
+}</div>
+
+    <h4>Nested Loop (Perulangan Bersarang)</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Pola bintang segitiga
+    for i := 1; i <= 5; i++ {
+        for j := 1; j <= i; j++ {
+            fmt.Print("* ")
+        }
+        fmt.Println()
+    }
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li>Buat program yang menggunakan berbagai jenis perulangan</li>
+            <li><strong>SOAL:</strong> Buatlah program yang meminta pengguna memasukkan bilangan bulat positif N, lalu tampilkan semua bilangan ganjil dari 1 hingga N</li>
+        </ul>
+    </div>
+
+    <h4>Contoh Penyelesaian SOAL 1: Bilangan Ganjil</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var n int
+    fmt.Print("Masukkan bilangan N: ")
+    fmt.Scan(&n)
+    
+    fmt.Println("Bilangan ganjil dari 1 hingga", n, ":")
+    for i := 1; i <= n; i++ {
+        if i%2 != 0 {
+            fmt.Print(i, " ")
+        }
+    }
+    fmt.Println()
+}</div>
+
+    <p><strong>Contoh Input & Output:</strong></p>
+    <div class="code-block">Masukkan bilangan N: 15
+Bilangan ganjil dari 1 hingga 15 :
+1 3 5 7 9 11 13 15</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Soal Mirip</h4>
+        <ul>
+            <li><strong>SOAL:</strong> Buatlah program yang meminta pengguna memasukkan bilangan bulat positif N, lalu tampilkan semua bilangan genap dari 1 hingga N</li>
+        </ul>
+    </div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li><strong>SOAL 2:</strong> Seorang anak menabung dengan jumlah yang bertambah Rp500 tiap harinya. 
+                Hari pertama Rp1.000, hari kedua Rp1.500, hari ketiga Rp2.000, dan seterusnya. 
+                Buat program yang menghitung total tabungan setelah N hari. 
+                <br><em>Contoh:</em><br>
+                Hari ke-1 = 1000<br>
+                Hari ke-2 = 1500<br>
+                Hari ke-3 = 2000<br>
+                Total setelah 3 hari = 4500
+            </li>
+        </ul>
+    </div>
+
+    <h4>Contoh Penyelesaian SOAL 2: Tabungan Harian</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var n int
+    fmt.Print("Masukkan jumlah hari: ")
+    fmt.Scan(&n)
+    
+    tabungan := 1000
+    total := 0
+    
+    for i := 1; i <= n; i++ {
+        fmt.Printf("Hari ke-%d = %d\n", i, tabungan)
+        total += tabungan
+        tabungan += 500
+    }
+    
+    fmt.Printf("Total setelah %d hari = %d\n", n, total)
+}</div>
+
+    <p><strong>Contoh Input & Output:</strong></p>
+    <div class="code-block">Masukkan jumlah hari: 5
+Hari ke-1 = 1000
+Hari ke-2 = 1500
+Hari ke-3 = 2000
+Hari ke-4 = 2500
+Hari ke-5 = 3000
+Total setelah 5 hari = 10000</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Soal Mirip</h4>
+        <ul>
+            <li><strong>SOAL:</strong> Seorang anak menabung dengan jumlah yang bertambah Rp1.000 tiap harinya. 
+                Hari pertama Rp2.000, hari kedua Rp3.000, hari ketiga Rp4.000, dan seterusnya. 
+                Buat program yang menghitung total tabungan setelah N hari.
+            </li>
+        </ul>
+    </div>
+
+    <div class="exercise-box">
+        <h4>Latihan Praktek</h4>
+        <ul>
+            <li><strong>SOAL 3:</strong> Seorang pelanggan berbelanja N kali. 
+                Setiap kali belanja, ia mengeluarkan Rp20.000. 
+                Jika total belanja mencapai Rp100.000 atau lebih, ia mendapat diskon Rp10.000. 
+                Hitung total pembayaran setelah N kali belanja.
+            </li>
+        </ul>
+    </div>
+
+    <h4>Contoh Penyelesaian SOAL 3: Total Belanja dengan Diskon</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var n int
+    fmt.Print("Masukkan jumlah belanja: ")
+    fmt.Scan(&n)
+    
+    hargaPerBelanja := 20000
+    totalBelanja := n * hargaPerBelanja
+    diskon := 0
+    
+    fmt.Printf("Jumlah belanja: %d kali\n", n)
+    fmt.Printf("Harga per belanja: Rp %d\n", hargaPerBelanja)
+    fmt.Printf("Total belanja: Rp %d\n", totalBelanja)
+    
+    if totalBelanja >= 100000 {
+        diskon = 10000
+        fmt.Printf("Diskon: Rp %d\n", diskon)
+    } else {
+        fmt.Println("Diskon: Rp 0 (belum mencapai minimum)")
+    }
+    
+    totalPembayaran := totalBelanja - diskon
+    fmt.Printf("Total pembayaran: Rp %d\n", totalPembayaran)
+}</div>
+
+    <p><strong>Contoh Input & Output 1:</strong></p>
+    <div class="code-block">Masukkan jumlah belanja: 6
+Jumlah belanja: 6 kali
+Harga per belanja: Rp 20000
+Total belanja: Rp 120000
+Diskon: Rp 10000
+Total pembayaran: Rp 110000</div>
+
+    <p><strong>Contoh Input & Output 2:</strong></p>
+    <div class="code-block">Masukkan jumlah belanja: 3
+Jumlah belanja: 3 kali
+Harga per belanja: Rp 20000
+Total belanja: Rp 60000
+Diskon: Rp 0 (belum mencapai minimum)
+Total pembayaran: Rp 60000</div>
+
+    <div class="exercise-box">
+        <h4>Latihan Soal Mirip</h4>
+        <ul>
+            <li><strong>SOAL:</strong> Seorang pelanggan berbelanja N kali. 
+                Setiap kali belanja, ia mengeluarkan Rp15.000. 
+                Jika total belanja mencapai Rp75.000 atau lebih, ia mendapat diskon Rp7.500. 
+                Hitung total pembayaran setelah N kali belanja.
+            </li>
+        </ul>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
 
             <section id="array" class="section">
                 <h2>6. Array & Slice</h2>
