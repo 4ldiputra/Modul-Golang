@@ -1579,53 +1579,692 @@ Total pembayaran: Rp 60000</div>
 
 
 
+<section id="array" class="section">
+    <button class="back-btn" onclick="showNavigation()">← Kembali ke Menu</button>
+    <h2 class="section-title">📊 Array di Golang</h2>
+    
+    <div class="subsection">
+        <h3>6.1 Pengenalan Array</h3>
+        
+        <div class="highlight">
+            <p><strong>Array</strong> adalah struktur data yang digunakan untuk menyimpan kumpulan elemen dengan tipe data yang sama dalam lokasi memori yang berdekatan. Di Go, ukuran array adalah bagian dari tipenya dan bersifat tetap (fixed size).</p>
+            <p><strong>Perbedaan dengan C:</strong> Array di Go di-pass by value (dikopi), sedangkan di C di-pass by reference.</p>
+        </div>
 
-
-
-
-
-
-
-
-
-
-            <section id="array" class="section">
-                <h2>6. Array & Slice</h2>
-                <h3>6.1 Array</h3>
-                <div class="code-block">package main
+        <h4>Deklarasi Array</h4>
+        <div class="code-block">
+<pre><code>package main
 
 import "fmt"
 
 func main() {
-    // Deklarasi array
+    // Cara 1: Deklarasi tanpa inisialisasi
     var numbers [5]int
-    fruits := [3]string{"Apple", "Banana", "Orange"}
-    
-    fmt.Println(numbers)
+    fmt.Println(numbers) // Output: [0 0 0 0 0]
+
+    // Cara 2: Deklarasi dengan inisialisasi
+    var fruits [3]string = [3]string{"Apple", "Banana", "Orange"}
     fmt.Println(fruits)
-}</div>
-                <h3>6.2 Slice</h3>
-                <div class="code-block">package main
+
+    // Cara 3: Short declaration (lebih umum)
+    scores := [5]int{10, 20, 30, 40, 50}
+    fmt.Println(scores)
+
+    // Cara 4: Inisialisasi sebagian
+    partial := [5]int{1, 2}
+    fmt.Println(partial) // Output: [1 2 0 0 0]
+
+    // Cara 5: Compiler menghitung ukuran otomatis
+    auto := [...]int{1, 2, 3, 4}
+    fmt.Println(auto)
+    fmt.Println("Panjang:", len(auto)) // Output: 4
+}</code></pre>
+        </div>
+
+        <h4>Mengakses dan Mengubah Elemen Array</h4>
+        <div class="code-block">
+<pre><code>package main
 
 import "fmt"
 
 func main() {
-    // Membuat slice
-    numbers := []int{1, 2, 3, 4, 5}
+    numbers := [5]int{10, 20, 30, 40, 50}
+
+    // Mengakses elemen (indeks dimulai dari 0)
+    fmt.Println("Elemen pertama:", numbers[0])  // 10
+    fmt.Println("Elemen terakhir:", numbers[4]) // 50
+
+    // Mengubah nilai elemen
+    numbers[2] = 35
+    fmt.Println("Setelah diubah:", numbers) // [10 20 35 40 50]
+
+    // Akses di luar batas akan error saat compile
+    // fmt.Println(numbers[10]) // ERROR: index out of range
+}</code></pre>
+        </div>
+
+        <h4>Menghitung Panjang Array</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    numbers := [5]int{10, 20, 30, 40, 50}
     
-    // Append
-    numbers = append(numbers, 6, 7)
+    // Fungsi len() untuk mendapatkan panjang array
+    panjang := len(numbers)
+    fmt.Printf("Jumlah elemen array = %d\n", panjang)
+
+    // Gunakan len() dalam loop
+    for i := 0; i < len(numbers); i++ {
+        fmt.Printf("Index %d = %d\n", i, numbers[i])
+    }
+}</code></pre>
+        </div>
+
+        <h4>Perulangan pada Array</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    numbers := [5]int{10, 20, 30, 40, 50}
+
+    // CARA 1: For loop tradisional (seperti C)
+    fmt.Println("Cara 1: For loop tradisional")
+    for i := 0; i < len(numbers); i++ {
+        fmt.Printf("numbers[%d] = %d\n", i, numbers[i])
+    }
+
+    // CARA 2: Range - mendapat index dan value
+    fmt.Println("\nCara 2: Range dengan index dan value")
+    for index, value := range numbers {
+        fmt.Printf("[%d] = %d\n", index, value)
+    }
+
+    // CARA 3: Range - hanya value (index diabaikan dengan _)
+    fmt.Println("\nCara 3: Range hanya value")
+    for _, value := range numbers {
+        fmt.Print(value, " ")
+    }
+    fmt.Println()
+
+    // CARA 4: Range - hanya index
+    fmt.Println("\nCara 4: Range hanya index")
+    for index := range numbers {
+        fmt.Print(index, " ")
+    }
+    fmt.Println()
+}</code></pre>
+        </div>
+
+        <h4>Input Array dari User</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    var data [5]int
     
-    fmt.Println(numbers)
-    fmt.Println("Length:", len(numbers))
-}</div>
-                <div class="exercise-box">
-                    <h4>Latihan Praktek</h4>
+    fmt.Println("=== Program Input Array ===")
+    
+    // Input dari user
+    for i := 0; i < len(data); i++ {
+        fmt.Printf("Masukkan elemen ke-%d: ", i+1)
+        fmt.Scan(&data[i])
+    }
+
+    // Tampilkan isi array
+    fmt.Println("\nIsi array:")
+    for i, val := range data {
+        fmt.Printf("Index %d: %d\n", i, val)
+    }
+
+    // Atau tampilkan langsung
+    fmt.Println("\nArray:", data)
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>6.2 Operasi pada Array</h3>
+
+        <h4>Mencari Nilai Terbesar dan Terkecil</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    numbers := [7]int{7, 2, 9, 4, 6, 1, 8}
+    
+    // Inisialisasi dengan elemen pertama
+    maks := numbers[0]
+    min := numbers[0]
+
+    // Cari nilai terbesar dan terkecil
+    for i := 1; i < len(numbers); i++ {
+        if numbers[i] > maks {
+            maks = numbers[i]
+        }
+        if numbers[i] < min {
+            min = numbers[i]
+        }
+    }
+
+    fmt.Println("Array:", numbers)
+    fmt.Println("Nilai terbesar =", maks)
+    fmt.Println("Nilai terkecil =", min)
+}</code></pre>
+        </div>
+
+        <h4>Menghitung Total dan Rata-rata</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    numbers := [5]int{10, 20, 30, 40, 50}
+    total := 0
+
+    // Hitung total
+    for _, num := range numbers {
+        total += num
+    }
+
+    // Hitung rata-rata
+    rata := float64(total) / float64(len(numbers))
+
+    fmt.Println("Array:", numbers)
+    fmt.Println("Total =", total)
+    fmt.Printf("Rata-rata = %.2f\n", rata)
+}</code></pre>
+        </div>
+
+        <h4>Mencari Elemen Tertentu</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    numbers := [7]int{10, 25, 30, 45, 20, 35, 50}
+    var cari int
+    
+    fmt.Print("Masukkan angka yang dicari: ")
+    fmt.Scan(&cari)
+
+    found := false
+    position := -1
+
+    // Linear search
+    for i, num := range numbers {
+        if num == cari {
+            found = true
+            position = i
+            break
+        }
+    }
+
+    if found {
+        fmt.Printf("%d ditemukan pada index %d\n", cari, position)
+    } else {
+        fmt.Printf("%d tidak ditemukan dalam array\n", cari)
+    }
+}</code></pre>
+        </div>
+
+        <h4>Menghitung Elemen Tertentu</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    numbers := [10]int{5, 3, 5, 8, 5, 2, 5, 9, 5, 1}
+    var cari int
+    
+    fmt.Print("Masukkan angka yang ingin dihitung: ")
+    fmt.Scan(&cari)
+
+    count := 0
+    positions := []int{} // Simpan posisi (gunakan slice)
+
+    for i, num := range numbers {
+        if num == cari {
+            count++
+            positions = append(positions, i)
+        }
+    }
+
+    fmt.Printf("\nAngka %d muncul sebanyak %d kali\n", cari, count)
+    if count > 0 {
+        fmt.Print("Pada index: ")
+        for _, pos := range positions {
+            fmt.Print(pos, " ")
+        }
+        fmt.Println()
+    }
+}</code></pre>
+        </div>
+    </div>
+
+    <div class="subsection">
+        <h3>6.3 Latihan dan Contoh Program</h3>
+
+        <div class="exercise-box">
+            <h4>Latihan Praktek</h4>
+            <ul>
+                <li><strong>SOAL 1:</strong> Nilai Siswa
+                    <p>Seorang guru ingin menyimpan nilai ujian 5 siswa di dalam array, lalu mencari:</p>
                     <ul>
-                        <li><strong>SOAL:</strong> Buatlah program untuk menghitung rata-rata nilai siswa menggunakan slice</li>
+                        <li>Nilai tertinggi</li>
+                        <li>Nilai terendah</li>
+                        <li>Rata-rata nilai siswa</li>
                     </ul>
-                </div>
-            </section>
+                    <p>Buat program dengan input nilai dari user dan tampilkan hasilnya.</p>
+                </li>
+            </ul>
+        </div>
+
+        <h4>Solusi SOAL 1: Program Nilai Siswa</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    var nilai [5]int
+    var maks, min, total int
+    var rata float64
+
+    fmt.Println("=== Program Nilai Siswa ===\n")
+
+    // Input nilai siswa
+    for i := 0; i < len(nilai); i++ {
+        fmt.Printf("Masukkan nilai siswa ke-%d: ", i+1)
+        fmt.Scan(&nilai[i])
+    }
+
+    // Asumsikan nilai awal sebagai acuan
+    maks = nilai[0]
+    min = nilai[0]
+
+    // Proses mencari maks, min, dan total
+    for _, n := range nilai {
+        if n > maks {
+            maks = n
+        }
+        if n < min {
+            min = n
+        }
+        total += n
+    }
+
+    // Hitung rata-rata
+    rata = float64(total) / float64(len(nilai))
+
+    // Tampilkan hasil
+    fmt.Println("\n=== HASIL ANALISIS ===")
+    fmt.Println("Nilai tertinggi =", maks)
+    fmt.Println("Nilai terendah  =", min)
+    fmt.Printf("Rata-rata nilai = %.2f\n", rata)
+}</code></pre>
+        </div>
+
+        <div class="exercise-box">
+            <h4>Latihan Praktek</h4>
+            <ul>
+                <li><strong>SOAL 1A:</strong> Gaji Karyawan
+                    <p>Manajer perusahaan ingin menyimpan gaji 6 karyawan di dalam array.</p>
+                    <ul>
+                        <li>Tampilkan gaji tertinggi</li>
+                        <li>Tampilkan gaji terendah</li>
+                        <li>Hitung rata-rata gaji karyawan</li>
+                        <li>Buat program dengan input gaji dari user</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="exercise-box">
+            <h4>Latihan Praktek</h4>
+            <ul>
+                <li><strong>SOAL 2:</strong> Skor Permainan
+                    <p>Ada 10 skor permainan yang disimpan dalam array: {85, 70, 90, 95, 60, 88, 76, 92, 100, 67}</p>
+                    <ul>
+                        <li>Menampilkan semua skor</li>
+                        <li>Mencari skor terbesar dan terkecil</li>
+                        <li>Menghitung rata-rata skor</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h4>Solusi SOAL 2: Program Skor Permainan</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    skor := [10]int{85, 70, 90, 95, 60, 88, 76, 92, 100, 67}
+    var terbesar, terkecil, total int
+    var rata float64
+
+    fmt.Println("=== Program Skor Permainan ===\n")
+
+    // Tampilkan semua skor
+    fmt.Println("Daftar semua skor:")
+    for i, s := range skor {
+        fmt.Printf("Skor ke-%d: %d\n", i+1, s)
+    }
+
+    // Inisialisasi nilai terbesar dan terkecil
+    terbesar = skor[0]
+    terkecil = skor[0]
+
+    // Proses mencari terbesar, terkecil, dan total
+    for _, s := range skor {
+        if s > terbesar {
+            terbesar = s
+        }
+        if s < terkecil {
+            terkecil = s
+        }
+        total += s
+    }
+
+    // Hitung rata-rata
+    rata = float64(total) / float64(len(skor))
+
+    // Tampilkan hasil
+    fmt.Println("\n=== HASIL ANALISIS ===")
+    fmt.Println("Skor terbesar :", terbesar)
+    fmt.Println("Skor terkecil :", terkecil)
+    fmt.Printf("Rata-rata skor: %.2f\n", rata)
+}</code></pre>
+        </div>
+
+        <div class="exercise-box">
+            <h4>Latihan Praktek</h4>
+            <ul>
+                <li><strong>SOAL 3:</strong> Suhu Harian
+                    <p>Catat suhu harian selama 7 hari ke dalam array.</p>
+                    <ul>
+                        <li>Program harus bisa menampilkan suhu tertinggi dalam seminggu</li>
+                        <li>Menampilkan suhu terendah dalam seminggu</li>
+                        <li>Menampilkan rata-rata suhu dalam seminggu</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h4>Solusi SOAL 3: Program Suhu Harian</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    var suhu [7]float64
+    var tertinggi, terendah, total, rata float64
+    hari := [7]string{"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"}
+
+    fmt.Println("=== Program Suhu Harian ===")
+    fmt.Println("Masukkan suhu harian selama 7 hari:\n")
+
+    // Input suhu harian
+    for i := 0; i < len(suhu); i++ {
+        fmt.Printf("Suhu hari %s: ", hari[i])
+        fmt.Scan(&suhu[i])
+    }
+
+    // Inisialisasi nilai tertinggi dan terendah
+    tertinggi = suhu[0]
+    terendah = suhu[0]
+
+    // Proses mencari tertinggi, terendah, dan total
+    for _, s := range suhu {
+        if s > tertinggi {
+            tertinggi = s
+        }
+        if s < terendah {
+            terendah = s
+        }
+        total += s
+    }
+
+    // Hitung rata-rata
+    rata = total / float64(len(suhu))
+
+    // Tampilkan hasil
+    fmt.Println("\n=== HASIL ANALISIS SUHU ===")
+    fmt.Printf("Suhu tertinggi dalam seminggu: %.2f°C\n", tertinggi)
+    fmt.Printf("Suhu terendah dalam seminggu : %.2f°C\n", terendah)
+    fmt.Printf("Rata-rata suhu dalam seminggu: %.2f°C\n", rata)
+}</code></pre>
+        </div>
+
+        <div class="exercise-box">
+            <h4>Latihan Praktek</h4>
+            <ul>
+                <li><strong>SOAL 4:</strong> Bilangan Genap dan Ganjil
+                    <p>Diberikan array berisi 10 bilangan.</p>
+                    <ul>
+                        <li>Memisahkan bilangan genap dan ganjil</li>
+                        <li>Menampilkan jumlah bilangan genap dan jumlah bilangan ganjil</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h4>Solusi SOAL 4: Program Bilangan Genap dan Ganjil</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    var bilangan [10]int
+    var genap [10]int
+    var ganjil [10]int
+    var jumlahGenap, jumlahGanjil int
+
+    fmt.Println("=== Program Genap Ganjil ===")
+    fmt.Println("Masukkan 10 bilangan:\n")
+
+    // Input bilangan
+    for i := 0; i < len(bilangan); i++ {
+        fmt.Printf("Bilangan ke-%d: ", i+1)
+        fmt.Scan(&bilangan[i])
+    }
+
+    // Pisahkan genap dan ganjil
+    for _, b := range bilangan {
+        if b%2 == 0 {
+            genap[jumlahGenap] = b
+            jumlahGenap++
+        } else {
+            ganjil[jumlahGanjil] = b
+            jumlahGanjil++
+        }
+    }
+
+    // Tampilkan hasil
+    fmt.Println("\n=== HASIL ANALISIS ===")
+    fmt.Print("Bilangan Genap: ")
+    for i := 0; i < jumlahGenap; i++ {
+        fmt.Print(genap[i], " ")
+    }
+    fmt.Printf("\nJumlah bilangan genap: %d\n", jumlahGenap)
+
+    fmt.Print("\nBilangan Ganjil: ")
+    for i := 0; i < jumlahGanjil; i++ {
+        fmt.Print(ganjil[i], " ")
+    }
+    fmt.Printf("\nJumlah bilangan ganjil: %d\n", jumlahGanjil)
+}</code></pre>
+        </div>
+
+        <div class="exercise-box">
+            <h4>Latihan Praktek</h4>
+            <ul>
+                <li><strong>SOAL 5:</strong> Statistik Data
+                    <p>Buatlah program untuk menghitung statistik dari array berisi 8 bilangan:</p>
+                    <ul>
+                        <li>Nilai maksimum</li>
+                        <li>Nilai minimum</li>
+                        <li>Jumlah total</li>
+                        <li>Rata-rata</li>
+                        <li>Jumlah bilangan di atas rata-rata</li>
+                        <li>Jumlah bilangan di bawah rata-rata</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <h4>Solusi SOAL 5: Program Statistik Data</h4>
+        <div class="code-block">
+<pre><code>package main
+
+import "fmt"
+
+func main() {
+    var data [8]int
+    var maks, min, total int
+    var rata float64
+    var diAtas, diBawah int
+
+    fmt.Println("=== Program Statistik Data ===")
+    fmt.Println("Masukkan 8 bilangan:\n")
+
+    // Input data
+    for i := 0; i < len(data); i++ {
+        fmt.Printf("Data ke-%d: ", i+1)
+        fmt.Scan(&data[i])
+    }
+
+    // Inisialisasi
+    maks = data[0]
+    min = data[0]
+    total = 0
+
+    // Hitung maks, min, total
+    for _, d := range data {
+        if d > maks {
+            maks = d
+        }
+        if d < min {
+            min = d
+        }
+        total += d
+    }
+
+    // Hitung rata-rata
+    rata = float64(total) / float64(len(data))
+
+    // Hitung data di atas dan di bawah rata-rata
+    for _, d := range data {
+        if float64(d) > rata {
+            diAtas++
+        } else if float64(d) < rata {
+            diBawah++
+        }
+    }
+
+    // Tampilkan hasil
+    fmt.Println("\n=== HASIL STATISTIK ===")
+    fmt.Println("Data:", data)
+    fmt.Println("Nilai maksimum:", maks)
+    fmt.Println("Nilai minimum:", min)
+    fmt.Println("Total:", total)
+    fmt.Printf("Rata-rata: %.2f\n", rata)
+    fmt.Println("Bilangan di atas rata-rata:", diAtas)
+    fmt.Println("Bilangan di bawah rata-rata:", diBawah)
+}</code></pre>
+        </div>
+    </div>
+
+    
+
+    <div class="subsection" style="background-color: #fff3cd; padding: 20px; border-radius: 8px; margin-top: 20px;">
+        <h3>💡 Poin Penting tentang Array di Go</h3>
+        <ul style="line-height: 2;">
+            <li>✅ <strong>Ukuran tetap:</strong> Ukuran array tidak bisa diubah setelah deklarasi</li>
+            <li>✅ <strong>Zero value:</strong> Elemen yang tidak diinisialisasi akan bernilai 0 (int), "" (string), false (bool)</li>
+            <li>✅ <strong>Pass by value:</strong> Array di-copy saat dikirim ke fungsi (beda dengan C)</li>
+            <li>✅ <strong>len():</strong> Fungsi built-in untuk mendapatkan panjang array</li>
+            <li>✅ <strong>Range loop:</strong> Cara idiomatik untuk iterasi array di Go</li>
+            <li>⚠️ <strong>Tipe berbeda:</strong> [3]int dan [4]int adalah tipe yang berbeda</li>
+            <li>💡 <strong>Untuk ukuran dinamis:</strong> Gunakan Slice (akan dibahas di materi selanjutnya)</li>
+        </ul>
+    </div>
+
+    <div class="subsection" style="background-color: #e7f3ff; padding: 20px; border-radius: 8px; margin-top: 20px;">
+        <h3>🔄 Perbandingan Array: Go vs C</h3>
+        <table style="width:100%; border-collapse: collapse; margin-top: 15px;">
+            <tr style="background-color: #f0f0f0;">
+                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Aspek</th>
+                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">C</th>
+                <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Go</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Deklarasi</strong></td>
+                <td style="border: 1px solid #ddd; padding: 10px;"><code>int arr[5];</code></td>
+                <td style="border: 1px solid #ddd; padding: 10px;"><code>var arr [5]int</code></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Panjang</strong></td>
+                <td style="border: 1px solid #ddd; padding: 10px;"><code>sizeof(arr)/sizeof(arr[0])</code></td>
+                <td style="border: 1px solid #ddd; padding: 10px;"><code>len(arr)</code></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Pass ke Function</strong></td>
+                <td style="border: 1px solid #ddd; padding: 10px;">By reference (otomatis)</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">By value (harus pakai pointer jika ingin ubah)</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Perulangan</strong></td>
+                <td style="border: 1px solid #ddd; padding: 10px;"><code>for(i=0; i&lt;5; i++)</code></td>
+                <td style="border: 1px solid #ddd; padding: 10px;"><code>for i, v := range arr</code></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #ddd; padding: 10px;"><strong>Bounds Checking</strong></td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Tidak ada (bisa overflow)</td>
+                <td style="border: 1px solid #ddd; padding: 10px;">Ada (panic jika out of range)</td>
+            </tr>
+        </table>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+            
+                
+
+
+
+
+
+
+
+
+
+
+
+
 
             <section id="map" class="section">
                 <h2>7. Map</h2>
