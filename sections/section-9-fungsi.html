@@ -1,0 +1,316 @@
+<section id="fungsi" class="section active">
+    <h2>9. Fungsi (Functions)</h2>
+    
+    <h3>10.1 Apa Itu Fungsi?</h3>
+    <div class="highlight">
+        <p><strong>Fungsi</strong> adalah blok kode yang dapat dipanggil berulang kali untuk melakukan tugas tertentu.</p>
+        <p><strong>Keuntungan Menggunakan Fungsi:</strong></p>
+        <ul>
+            <li>Kode lebih rapi dan terorganisir</li>
+            <li>Menghindari pengulangan kode (DRY - Don't Repeat Yourself)</li>
+            <li>Mudah di-debug dan di-maintain</li>
+            <li>Reusability - bisa dipakai berkali-kali</li>
+        </ul>
+    </div>
+
+    <h3>10.2 Deklarasi Fungsi Dasar</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+// Fungsi tanpa parameter dan return
+func sapa() {
+    fmt.Println("Halo, Selamat datang!")
+}
+
+// Fungsi dengan parameter
+func sapaOrang(nama string) {
+    fmt.Println("Halo,", nama, "!")
+}
+
+// Fungsi dengan return value
+func tambah(a int, b int) int {
+    return a + b
+}
+
+func main() {
+    sapa()
+    sapaOrang("Budi")
+    
+    hasil := tambah(5, 3)
+    fmt.Println("5 + 3 =", hasil)
+}</div>
+
+    <h3>10.3 Multiple Parameters</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+// Parameter dengan tipe sama bisa disingkat
+func luasPersegiPanjang(panjang, lebar float64) float64 {
+    return panjang * lebar
+}
+
+// Multiple parameters beda tipe
+func buatProfile(nama string, umur int, sudahMenikah bool) {
+    fmt.Println("Nama         :", nama)
+    fmt.Println("Umur         :", umur)
+    fmt.Println("Sudah Menikah:", sudahMenikah)
+}
+
+func main() {
+    luas := luasPersegiPanjang(10, 5)
+    fmt.Println("Luas:", luas)
+    
+    fmt.Println("\n===== PROFILE =====")
+    buatProfile("Ani", 25, false)
+}</div>
+
+    <h3>10.4 Multiple Return Values</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+// Fungsi bisa return lebih dari 1 nilai
+func hitungGeometri(panjang, lebar float64) (float64, float64) {
+    luas := panjang * lebar
+    keliling := 2 * (panjang + lebar)
+    return luas, keliling
+}
+
+// Named return values
+func bagi(a, b float64) (hasil float64, err string) {
+    if b == 0 {
+        err = "Tidak bisa dibagi 0"
+        return
+    }
+    hasil = a / b
+    return
+}
+
+func main() {
+    l, k := hitungGeometri(10, 5)
+    fmt.Println("Luas    :", l)
+    fmt.Println("Keliling:", k)
+    
+    hasil, pesan := bagi(10, 2)
+    if pesan != "" {
+        fmt.Println("Error:", pesan)
+    } else {
+        fmt.Println("Hasil:", hasil)
+    }
+}</div>
+
+    <h3>10.5 Variadic Function (Parameter Tak Terbatas)</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+// Fungsi dengan jumlah parameter tidak terbatas
+func jumlahkan(angka ...int) int {
+    total := 0
+    for _, num := range angka {
+        total += num
+    }
+    return total
+}
+
+func tampilkanNama(prefix string, nama ...string) {
+    fmt.Println(prefix)
+    for i, n := range nama {
+        fmt.Printf("%d. %s\n", i+1, n)
+    }
+}
+
+func main() {
+    // Bisa panggil dengan banyak parameter
+    fmt.Println("Total:", jumlahkan(1, 2, 3))
+    fmt.Println("Total:", jumlahkan(10, 20, 30, 40, 50))
+    
+    fmt.Println("\n===== DAFTAR MAHASISWA =====")
+    tampilkanNama("Kelas A:", "Budi", "Ani", "Citra", "Dedi")
+}</div>
+
+    <h3>10.6 Anonymous Function (Function Literal)</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Fungsi tanpa nama, langsung dijalankan
+    func() {
+        fmt.Println("Ini anonymous function!")
+    }()
+    
+    // Anonymous function dengan parameter
+    hasil := func(a, b int) int {
+        return a * b
+    }(5, 3)
+    
+    fmt.Println("5 x 3 =", hasil)
+    
+    // Assign ke variabel
+    kali := func(a, b int) int {
+        return a * b
+    }
+    
+    fmt.Println("10 x 2 =", kali(10, 2))
+}</div>
+
+    <h3>10.7 Function sebagai Parameter</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+// Fungsi yang menerima fungsi sebagai parameter
+func prosesAngka(angka int, fn func(int) int) int {
+    return fn(angka)
+}
+
+func main() {
+    // Fungsi pangkat 2
+    kuadrat := func(n int) int {
+        return n * n
+    }
+    
+    // Fungsi kali 2
+    duaKali := func(n int) int {
+        return n * 2
+    }
+    
+    fmt.Println("5 kuadrat:", prosesAngka(5, kuadrat))
+    fmt.Println("5 x 2    :", prosesAngka(5, duaKali))
+}</div>
+
+    <h3>10.8 Closure</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+// Fungsi yang return fungsi
+func counterGenerator() func() int {
+    count := 0
+    return func() int {
+        count++
+        return count
+    }
+}
+
+func main() {
+    counter1 := counterGenerator()
+    counter2 := counterGenerator()
+    
+    fmt.Println("Counter 1:")
+    fmt.Println(counter1())  // 1
+    fmt.Println(counter1())  // 2
+    fmt.Println(counter1())  // 3
+    
+    fmt.Println("\nCounter 2:")
+    fmt.Println(counter2())  // 1
+    fmt.Println(counter2())  // 2
+}</div>
+
+    <h3>10.9 Defer</h3>
+    <div class="highlight">
+        <p><strong>Defer</strong> digunakan untuk menunda eksekusi fungsi sampai fungsi yang memanggilnya selesai.</p>
+    </div>
+    
+    <div class="code-block">package main
+
+import "fmt"
+
+func contohDefer() {
+    defer fmt.Println("3. Ini dijalankan terakhir")
+    fmt.Println("1. Ini dijalankan pertama")
+    fmt.Println("2. Ini dijalankan kedua")
+}
+
+func hitungWaktu() {
+    defer fmt.Println("Selesai!")
+    fmt.Println("Mulai proses...")
+    fmt.Println("Sedang memproses...")
+}
+
+func main() {
+    contohDefer()
+    fmt.Println()
+    hitungWaktu()
+}</div>
+
+    <h3>10.10 Contoh Kasus: Kalkulator dengan Fungsi</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func tambah(a, b float64) float64 {
+    return a + b
+}
+
+func kurang(a, b float64) float64 {
+    return a - b
+}
+
+func kali(a, b float64) float64 {
+    return a * b
+}
+
+func bagi(a, b float64) (float64, error) {
+    if b == 0 {
+        return 0, fmt.Errorf("tidak bisa dibagi 0")
+    }
+    return a / b, nil
+}
+
+func main() {
+    var a, b float64
+    var operator string
+    
+    fmt.Println("===== KALKULATOR =====")
+    fmt.Print("Angka 1: ")
+    fmt.Scan(&a)
+    fmt.Print("Operator (+, -, *, /): ")
+    fmt.Scan(&operator)
+    fmt.Print("Angka 2: ")
+    fmt.Scan(&b)
+    
+    fmt.Println("\n===== HASIL =====")
+    
+    switch operator {
+    case "+":
+        fmt.Printf("%.2f + %.2f = %.2f\n", a, b, tambah(a, b))
+    case "-":
+        fmt.Printf("%.2f - %.2f = %.2f\n", a, b, kurang(a, b))
+    case "*":
+        fmt.Printf("%.2f * %.2f = %.2f\n", a, b, kali(a, b))
+    case "/":
+        hasil, err := bagi(a, b)
+        if err != nil {
+            fmt.Println("Error:", err)
+        } else {
+            fmt.Printf("%.2f / %.2f = %.2f\n", a, b, hasil)
+        }
+    default:
+        fmt.Println("Operator tidak valid!")
+    }
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 10</h4>
+        <ul>
+            <li><strong>Soal 1:</strong> Buatlah fungsi <code>isPrima(n int) bool</code> yang mengecek apakah sebuah angka adalah bilangan prima</li>
+            <li><strong>Soal 2:</strong> Buatlah fungsi <code>faktorial(n int) int</code> yang menghitung faktorial dari n</li>
+            <li><strong>Soal 3:</strong> Buatlah fungsi <code>cariMaksMin(angka ...int) (int, int)</code> yang return nilai maksimum dan minimum dari angka-angka yang diberikan</li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Tips Fungsi:</h4>
+        <ul>
+            <li>Buat fungsi yang melakukan satu tugas dengan baik (Single Responsibility)</li>
+            <li>Beri nama fungsi yang jelas dan deskriptif</li>
+            <li>Gunakan return value daripada print di dalam fungsi</li>
+            <li>Hindari terlalu banyak parameter (max 3-4)</li>
+            <li>Gunakan defer untuk cleanup resource</li>
+        </ul>
+    </div>
+</section>

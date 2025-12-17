@@ -1,0 +1,254 @@
+<section id="perulangan" class="section active">
+    <h2>5. Perulangan (Loop)</h2>
+    
+    <h3>5.1 FOR Loop Dasar</h3>
+    <div class="highlight">
+        <p>Go hanya memiliki satu keyword untuk loop yaitu <strong>for</strong>, tapi bisa digunakan dengan berbagai cara!</p>
+    </div>
+
+    <h4>Syntax:</h4>
+    <div class="code-block">for initialization; condition; post {
+    // kode yang diulang
+}</div>
+
+    <h4>Contoh:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Cetak angka 1-5
+    for i := 1; i <= 5; i++ {
+        fmt.Println("Angka:", i)
+    }
+}</div>
+
+    <h3>5.2 FOR sebagai WHILE</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    i := 1
+    
+    // Seperti while di bahasa lain
+    for i <= 5 {
+        fmt.Println("Angka:", i)
+        i++
+    }
+}</div>
+
+    <h3>5.3 Infinite Loop</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    counter := 0
+    
+    for {
+        counter++
+        fmt.Println("Loop ke-", counter)
+        
+        if counter >= 5 {
+            break  // Keluar dari loop
+        }
+    }
+}</div>
+
+    <h3>5.4 BREAK dan CONTINUE</h3>
+    
+    <h4>BREAK - Keluar dari loop:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    for i := 1; i <= 10; i++ {
+        if i == 5 {
+            break  // Berhenti saat i = 5
+        }
+        fmt.Println(i)
+    }
+    fmt.Println("Loop selesai")
+}</div>
+
+    <h4>CONTINUE - Skip iterasi:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Cetak angka ganjil 1-10
+    for i := 1; i <= 10; i++ {
+        if i % 2 == 0 {
+            continue  // Skip angka genap
+        }
+        fmt.Println(i)
+    }
+}</div>
+
+    <h3>5.5 Nested Loop (Loop Bersarang)</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Membuat pola bintang
+    for i := 1; i <= 5; i++ {
+        for j := 1; j <= i; j++ {
+            fmt.Print("* ")
+        }
+        fmt.Println()
+    }
+}</div>
+
+    <h4>Output:</h4>
+    <div class="example-box">
+        <pre>* 
+* * 
+* * * 
+* * * * 
+* * * * * </pre>
+    </div>
+
+    <h3>5.6 Loop dengan Range</h3>
+    <p>Digunakan untuk iterasi array, slice, map, atau string:</p>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Loop dengan array
+    angka := []int{10, 20, 30, 40, 50}
+    
+    for index, nilai := range angka {
+        fmt.Printf("Index %d: %d\n", index, nilai)
+    }
+    
+    // Loop string
+    nama := "Golang"
+    for i, huruf := range nama {
+        fmt.Printf("%d: %c\n", i, huruf)
+    }
+}</div>
+
+    <h3>5.7 Contoh: Tabel Perkalian</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var angka int
+    
+    fmt.Print("Masukkan angka (1-10): ")
+    fmt.Scan(&angka)
+    
+    fmt.Printf("\n===== TABEL PERKALIAN %d =====\n", angka)
+    
+    for i := 1; i <= 10; i++ {
+        hasil := angka * i
+        fmt.Printf("%d x %d = %d\n", angka, i, hasil)
+    }
+}</div>
+
+    <h3>5.8 Contoh: Hitung Faktorial</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var n int
+    
+    fmt.Print("Masukkan angka: ")
+    fmt.Scan(&n)
+    
+    faktorial := 1
+    
+    for i := 1; i <= n; i++ {
+        faktorial *= i
+    }
+    
+    fmt.Printf("Faktorial %d = %d\n", n, faktorial)
+}</div>
+
+    <h3>5.9 Contoh: Menu Program</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var pilihan int
+    
+    for {
+        fmt.Println("\n===== MENU UTAMA =====")
+        fmt.Println("1. Tambah Data")
+        fmt.Println("2. Lihat Data")
+        fmt.Println("3. Hapus Data")
+        fmt.Println("4. Keluar")
+        fmt.Print("Pilih menu (1-4): ")
+        fmt.Scan(&pilihan)
+        
+        switch pilihan {
+        case 1:
+            fmt.Println("→ Menambah data...")
+        case 2:
+            fmt.Println("→ Menampilkan data...")
+        case 3:
+            fmt.Println("→ Menghapus data...")
+        case 4:
+            fmt.Println("→ Terima kasih!")
+            return  // Keluar dari program
+        default:
+            fmt.Println("→ Pilihan tidak valid!")
+        }
+    }
+}</div>
+
+    <h3>5.10 Contoh: Deret Fibonacci</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var n int
+    
+    fmt.Print("Berapa deret Fibonacci? ")
+    fmt.Scan(&n)
+    
+    a, b := 0, 1
+    
+    fmt.Print("Deret Fibonacci: ")
+    for i := 1; i <= n; i++ {
+        fmt.Print(a, " ")
+        a, b = b, a+b
+    }
+    fmt.Println()
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 5</h4>
+        <ul>
+            <li><strong>Soal 1:</strong> Buatlah program yang mencetak bilangan genap dari 1-20</li>
+            <li><strong>Soal 2:</strong> Buatlah program yang menghitung jumlah dari 1+2+3+...+100</li>
+            <li><strong>Soal 3:</strong> Buatlah program yang membuat pola segitiga terbalik:
+                <pre>* * * * *
+* * * *
+* * *
+* *
+*</pre>
+            </li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Tips Perulangan:</h4>
+        <ul>
+            <li>Pastikan kondisi loop akan berakhir (hindari infinite loop tidak disengaja)</li>
+            <li>Gunakan <code>break</code> untuk keluar dari loop</li>
+            <li>Gunakan <code>continue</code> untuk skip iterasi tertentu</li>
+            <li>Nested loop bisa membuat program lambat, gunakan seperlunya</li>
+            <li><code>range</code> lebih praktis untuk iterasi collection</li>
+        </ul>
+    </div>
+</section>

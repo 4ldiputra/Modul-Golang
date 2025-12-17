@@ -1,0 +1,321 @@
+<section id="map" class="section active">
+    <h2>7. Map (Dictionary)</h2>
+    
+    <h3>7.1 Apa Itu Map?</h3>
+    <div class="highlight">
+        <p><strong>Map</strong> adalah struktur data yang menyimpan pasangan <strong>key-value</strong> (kunci-nilai).</p>
+        <p><strong>Karakteristik Map:</strong></p>
+        <ul>
+            <li>Setiap key harus unik</li>
+            <li>Key dan value bisa berbagai tipe data</li>
+            <li>Tidak berurutan (unordered)</li>
+            <li>Dinamis (bisa bertambah/berkurang)</li>
+        </ul>
+    </div>
+
+    <h3>7.2 Deklarasi Map</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Cara 1: Dengan make
+    mahasiswa := make(map[string]int)
+    mahasiswa["Budi"] = 85
+    mahasiswa["Ani"] = 90
+    mahasiswa["Citra"] = 88
+    
+    fmt.Println(mahasiswa)
+    
+    // Cara 2: Dengan map literal
+    buah := map[string]int{
+        "Apel":   5000,
+        "Mangga": 8000,
+        "Jeruk":  3000,
+    }
+    
+    fmt.Println(buah)
+}</div>
+
+    <h3>7.3 Mengakses dan Mengubah Map</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    nilai := map[string]int{
+        "Matematika": 85,
+        "Fisika":     90,
+        "Kimia":      88,
+    }
+    
+    // Akses nilai
+    fmt.Println("Nilai Matematika:", nilai["Matematika"])
+    
+    // Ubah nilai
+    nilai["Fisika"] = 95
+    fmt.Println("Nilai Fisika diubah:", nilai["Fisika"])
+    
+    // Tambah data baru
+    nilai["Biologi"] = 87
+    fmt.Println("Semua nilai:", nilai)
+    
+    // Cek key ada atau tidak
+    biology, ada := nilai["Biologi"]
+    if ada {
+        fmt.Println("Nilai Biologi:", biology)
+    } else {
+        fmt.Println("Biologi tidak ada")
+    }
+}</div>
+
+    <h3>7.4 Menghapus Data dari Map</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    buah := map[string]int{
+        "Apel":   5000,
+        "Mangga": 8000,
+        "Jeruk":  3000,
+    }
+    
+    fmt.Println("Sebelum hapus:", buah)
+    
+    // Hapus data
+    delete(buah, "Jeruk")
+    
+    fmt.Println("Setelah hapus:", buah)
+}</div>
+
+    <h3>7.5 Looping Map</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    kontak := map[string]string{
+        "Budi":  "081234567890",
+        "Ani":   "082345678901",
+        "Citra": "083456789012",
+    }
+    
+    fmt.Println("===== DAFTAR KONTAK =====")
+    for nama, nohp := range kontak {
+        fmt.Printf("%s: %s\n", nama, nohp)
+    }
+}</div>
+
+    <h3>7.6 Map dengan Value Slice</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Map dengan value berupa slice
+    nilaiMahasiswa := map[string][]int{
+        "Budi":  {85, 90, 88},
+        "Ani":   {90, 92, 89},
+        "Citra": {78, 85, 80},
+    }
+    
+    fmt.Println("===== NILAI MAHASISWA =====")
+    for nama, nilaiList := range nilaiMahasiswa {
+        total := 0
+        for _, nilai := range nilaiList {
+            total += nilai
+        }
+        rataRata := float64(total) / float64(len(nilaiList))
+        fmt.Printf("%s: %v (Rata-rata: %.2f)\n", nama, nilaiList, rataRata)
+    }
+}</div>
+
+    <h3>7.7 Nested Map (Map dalam Map)</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Map dalam map
+    mahasiswa := map[string]map[string]interface{}{
+        "Budi": {
+            "Umur":    20,
+            "Jurusan": "Informatika",
+            "IPK":     3.8,
+        },
+        "Ani": {
+            "Umur":    21,
+            "Jurusan": "Sistem Informasi",
+            "IPK":     3.9,
+        },
+    }
+    
+    fmt.Println("===== DATA MAHASISWA =====")
+    for nama, data := range mahasiswa {
+        fmt.Printf("\n%s:\n", nama)
+        for key, value := range data {
+            fmt.Printf("  %s: %v\n", key, value)
+        }
+    }
+}</div>
+
+    <h3>7.8 Contoh: Sistem Inventori</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Inventori barang
+    stok := map[string]int{
+        "Laptop": 10,
+        "Mouse":  50,
+        "Keyboard": 30,
+    }
+    
+    harga := map[string]int{
+        "Laptop": 5000000,
+        "Mouse":  100000,
+        "Keyboard": 200000,
+    }
+    
+    for {
+        fmt.Println("\n===== SISTEM INVENTORI =====")
+        fmt.Println("1. Lihat Stok")
+        fmt.Println("2. Tambah Stok")
+        fmt.Println("3. Kurangi Stok")
+        fmt.Println("4. Keluar")
+        fmt.Print("Pilih menu: ")
+        
+        var pilihan int
+        fmt.Scan(&pilihan)
+        
+        switch pilihan {
+        case 1:
+            fmt.Println("\n===== DAFTAR STOK =====")
+            for barang, jumlah := range stok {
+                hrg := harga[barang]
+                fmt.Printf("%s: %d unit (Rp %d)\n", barang, jumlah, hrg)
+            }
+            
+        case 2:
+            var barang string
+            var jumlah int
+            fmt.Print("Nama barang: ")
+            fmt.Scan(&barang)
+            fmt.Print("Jumlah tambah: ")
+            fmt.Scan(&jumlah)
+            
+            stok[barang] += jumlah
+            fmt.Printf("✓ %s bertambah %d unit\n", barang, jumlah)
+            
+        case 3:
+            var barang string
+            var jumlah int
+            fmt.Print("Nama barang: ")
+            fmt.Scan(&barang)
+            fmt.Print("Jumlah kurang: ")
+            fmt.Scan(&jumlah)
+            
+            if stok[barang] >= jumlah {
+                stok[barang] -= jumlah
+                fmt.Printf("✓ %s berkurang %d unit\n", barang, jumlah)
+            } else {
+                fmt.Println("✗ Stok tidak cukup!")
+            }
+            
+        case 4:
+            fmt.Println("Terima kasih!")
+            return
+            
+        default:
+            fmt.Println("Pilihan tidak valid!")
+        }
+    }
+}</div>
+
+    <h3>7.9 Contoh: Buku Telepon</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    phonebook := make(map[string]string)
+    
+    for {
+        fmt.Println("\n===== BUKU TELEPON =====")
+        fmt.Println("1. Tambah Kontak")
+        fmt.Println("2. Cari Kontak")
+        fmt.Println("3. Hapus Kontak")
+        fmt.Println("4. Lihat Semua")
+        fmt.Println("5. Keluar")
+        fmt.Print("Pilih: ")
+        
+        var pilihan int
+        fmt.Scan(&pilihan)
+        
+        switch pilihan {
+        case 1:
+            var nama, nohp string
+            fmt.Print("Nama: ")
+            fmt.Scan(&nama)
+            fmt.Print("No HP: ")
+            fmt.Scan(&nohp)
+            phonebook[nama] = nohp
+            fmt.Println("✓ Kontak berhasil ditambahkan")
+            
+        case 2:
+            var nama string
+            fmt.Print("Cari nama: ")
+            fmt.Scan(&nama)
+            if nohp, ada := phonebook[nama]; ada {
+                fmt.Printf("%s: %s\n", nama, nohp)
+            } else {
+                fmt.Println("✗ Kontak tidak ditemukan")
+            }
+            
+        case 3:
+            var nama string
+            fmt.Print("Hapus nama: ")
+            fmt.Scan(&nama)
+            delete(phonebook, nama)
+            fmt.Println("✓ Kontak dihapus")
+            
+        case 4:
+            fmt.Println("\n===== DAFTAR KONTAK =====")
+            for nama, nohp := range phonebook {
+                fmt.Printf("%s: %s\n", nama, nohp)
+            }
+            
+        case 5:
+            return
+        }
+    }
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 7</h4>
+        <ul>
+            <li><strong>Soal 1:</strong> Buatlah program kamus Inggris-Indonesia menggunakan map. User bisa:
+                <ul>
+                    <li>Tambah kata baru</li>
+                    <li>Cari terjemahan</li>
+                    <li>Hapus kata</li>
+                    <li>Lihat semua kata</li>
+                </ul>
+            </li>
+            <li><strong>Soal 2:</strong> Buatlah program untuk menghitung frekuensi kemunculan kata dalam sebuah kalimat menggunakan map</li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Tips Map:</h4>
+        <ul>
+            <li>Gunakan <code>make(map[KeyType]ValueType)</code> untuk membuat map kosong</li>
+            <li>Selalu cek apakah key ada dengan <code>value, ok := myMap[key]</code></li>
+            <li>Gunakan <code>delete(map, key)</code> untuk menghapus</li>
+            <li>Map tidak berurutan, jangan andalkan urutan saat looping</li>
+            <li>Key harus comparable (bisa dibandingkan)</li>
+        </ul>
+    </div>
+</section>

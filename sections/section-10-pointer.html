@@ -1,0 +1,368 @@
+<section id="pointer" class="section active">
+    <h2>10. Pointer dan Method</h2>
+    
+    <h3>11.1 Apa Itu Pointer?</h3>
+    <div class="highlight">
+        <p><strong>Pointer</strong> adalah variabel yang menyimpan alamat memori dari variabel lain.</p>
+        <p><strong>Mengapa Menggunakan Pointer?</strong></p>
+        <ul>
+            <li>Mengubah nilai variabel di fungsi lain</li>
+            <li>Efisien untuk data besar (tidak copy)</li>
+            <li>Berbagi data antar fungsi</li>
+            <li>Diperlukan untuk method</li>
+        </ul>
+    </div>
+
+    <h3>11.2 Operator Pointer</h3>
+    <div class="example-box">
+        <ul>
+            <li><code>&</code> - Mengambil alamat memori variabel</li>
+            <li><code>*</code> - Mengakses nilai dari alamat memori (dereferencing)</li>
+        </ul>
+    </div>
+
+    <h3>11.3 Contoh Dasar Pointer</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    angka := 10
+    
+    // & mengambil alamat memori
+    pointer := &angka
+    
+    fmt.Println("Nilai angka     :", angka)
+    fmt.Println("Alamat angka    :", &angka)
+    fmt.Println("Pointer menyimpan:", pointer)
+    fmt.Println("Nilai dari pointer:", *pointer)
+    
+    // Ubah nilai melalui pointer
+    *pointer = 20
+    fmt.Println("\nSetelah ubah via pointer:")
+    fmt.Println("Nilai angka:", angka)  // ikut berubah!
+}</div>
+
+    <h3>11.4 Pointer di Fungsi</h3>
+    <h4>Tanpa Pointer (Pass by Value):</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func ubahAngka(x int) {
+    x = 100
+    fmt.Println("Di dalam fungsi:", x)
+}
+
+func main() {
+    angka := 10
+    fmt.Println("Sebelum:", angka)
+    ubahAngka(angka)
+    fmt.Println("Sesudah:", angka)  // Tidak berubah!
+}</div>
+
+    <h4>Dengan Pointer (Pass by Reference):</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func ubahAngka(x *int) {
+    *x = 100
+    fmt.Println("Di dalam fungsi:", *x)
+}
+
+func main() {
+    angka := 10
+    fmt.Println("Sebelum:", angka)
+    ubahAngka(&angka)
+    fmt.Println("Sesudah:", angka)  // Berubah!
+}</div>
+
+    <h3>11.5 Pointer dengan Struct</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+type Mahasiswa struct {
+    Nama string
+    IPK  float64
+}
+
+func naikkanIPK(mhs *Mahasiswa, nilai float64) {
+    mhs.IPK += nilai
+}
+
+func main() {
+    mhs := Mahasiswa{
+        Nama: "Budi",
+        IPK:  3.5,
+    }
+    
+    fmt.Println("IPK sebelum:", mhs.IPK)
+    naikkanIPK(&mhs, 0.2)
+    fmt.Println("IPK sesudah:", mhs.IPK)
+}</div>
+
+    <h3>11.6 Apa Itu Method?</h3>
+    <div class="highlight">
+        <p><strong>Method</strong> adalah fungsi yang terikat dengan struct tertentu.</p>
+        <p>Method memungkinkan kita membuat behavior untuk struct (mirip OOP).</p>
+    </div>
+
+    <h3>11.7 Deklarasi Method</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+type Persegi struct {
+    Sisi float64
+}
+
+// Method untuk menghitung luas
+func (p Persegi) hitungLuas() float64 {
+    return p.Sisi * p.Sisi
+}
+
+// Method untuk menghitung keliling
+func (p Persegi) hitungKeliling() float64 {
+    return 4 * p.Sisi
+}
+
+func main() {
+    persegi := Persegi{Sisi: 5}
+    
+    fmt.Println("Sisi    :", persegi.Sisi)
+    fmt.Println("Luas    :", persegi.hitungLuas())
+    fmt.Println("Keliling:", persegi.hitungKeliling())
+}</div>
+
+    <h3>11.8 Value Receiver vs Pointer Receiver</h3>
+    <h4>Value Receiver (tidak mengubah original):</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+type Counter struct {
+    Count int
+}
+
+// Value receiver - tidak mengubah original
+func (c Counter) increment() {
+    c.Count++
+    fmt.Println("Di dalam method:", c.Count)
+}
+
+func main() {
+    counter := Counter{Count: 0}
+    fmt.Println("Sebelum:", counter.Count)
+    counter.increment()
+    fmt.Println("Sesudah:", counter.Count)  // Tidak berubah!
+}</div>
+
+    <h4>Pointer Receiver (mengubah original):</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+type Counter struct {
+    Count int
+}
+
+// Pointer receiver - mengubah original
+func (c *Counter) increment() {
+    c.Count++
+    fmt.Println("Di dalam method:", c.Count)
+}
+
+func main() {
+    counter := Counter{Count: 0}
+    fmt.Println("Sebelum:", counter.Count)
+    counter.increment()
+    fmt.Println("Sesudah:", counter.Count)  // Berubah!
+}</div>
+
+    <h3>11.9 Contoh Praktis: Bank Account</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+type BankAccount struct {
+    Pemilik string
+    Saldo   float64
+}
+
+// Method untuk setor
+func (b *BankAccount) setor(jumlah float64) {
+    b.Saldo += jumlah
+    fmt.Printf("✓ Setor Rp %.2f berhasil\n", jumlah)
+}
+
+// Method untuk tarik
+func (b *BankAccount) tarik(jumlah float64) bool {
+    if b.Saldo >= jumlah {
+        b.Saldo -= jumlah
+        fmt.Printf("✓ Tarik Rp %.2f berhasil\n", jumlah)
+        return true
+    }
+    fmt.Println("✗ Saldo tidak cukup!")
+    return false
+}
+
+// Method untuk cek saldo
+func (b BankAccount) cekSaldo() {
+    fmt.Printf("Saldo %s: Rp %.2f\n", b.Pemilik, b.Saldo)
+}
+
+func main() {
+    rekening := BankAccount{
+        Pemilik: "Budi Santoso",
+        Saldo:   1000000,
+    }
+    
+    fmt.Println("===== BANK ACCOUNT =====")
+    rekening.cekSaldo()
+    
+    rekening.setor(500000)
+    rekening.cekSaldo()
+    
+    rekening.tarik(300000)
+    rekening.cekSaldo()
+    
+    rekening.tarik(2000000)  // Gagal
+    rekening.cekSaldo()
+}</div>
+
+    <h3>11.10 Contoh: Product dengan Method</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+type Product struct {
+    Name  string
+    Price float64
+    Stock int
+}
+
+func (p *Product) jual(jumlah int) bool {
+    if p.Stock >= jumlah {
+        p.Stock -= jumlah
+        total := float64(jumlah) * p.Price
+        fmt.Printf("✓ Terjual %d %s - Total: Rp %.2f\n", jumlah, p.Name, total)
+        return true
+    }
+    fmt.Println("✗ Stok tidak cukup!")
+    return false
+}
+
+func (p *Product) tambahStok(jumlah int) {
+    p.Stock += jumlah
+    fmt.Printf("✓ Stok %s bertambah %d unit\n", p.Name, jumlah)
+}
+
+func (p Product) info() {
+    fmt.Printf("%s - Rp %.2f (Stok: %d)\n", p.Name, p.Price, p.Stock)
+}
+
+func main() {
+    laptop := Product{
+        Name:  "Laptop Gaming",
+        Price: 15000000,
+        Stock: 5,
+    }
+    
+    fmt.Println("===== INFO PRODUK =====")
+    laptop.info()
+    
+    fmt.Println("\n===== TRANSAKSI =====")
+    laptop.jual(2)
+    laptop.info()
+    
+    laptop.tambahStok(10)
+    laptop.info()
+}</div>
+
+    <h3>11.11 Method dengan Multiple Struct</h3>
+    <div class="code-block">package main
+
+import "fmt"
+import "math"
+
+type Lingkaran struct {
+    Radius float64
+}
+
+func (l Lingkaran) luas() float64 {
+    return math.Pi * l.Radius * l.Radius
+}
+
+func (l Lingkaran) keliling() float64 {
+    return 2 * math.Pi * l.Radius
+}
+
+type PersegiPanjang struct {
+    Panjang float64
+    Lebar   float64
+}
+
+func (p PersegiPanjang) luas() float64 {
+    return p.Panjang * p.Lebar
+}
+
+func (p PersegiPanjang) keliling() float64 {
+    return 2 * (p.Panjang + p.Lebar)
+}
+
+func main() {
+    lingkaran := Lingkaran{Radius: 7}
+    persegi := PersegiPanjang{Panjang: 10, Lebar: 5}
+    
+    fmt.Println("===== LINGKARAN =====")
+    fmt.Printf("Radius  : %.2f\n", lingkaran.Radius)
+    fmt.Printf("Luas    : %.2f\n", lingkaran.luas())
+    fmt.Printf("Keliling: %.2f\n", lingkaran.keliling())
+    
+    fmt.Println("\n===== PERSEGI PANJANG =====")
+    fmt.Printf("Panjang : %.2f\n", persegi.Panjang)
+    fmt.Printf("Lebar   : %.2f\n", persegi.Lebar)
+    fmt.Printf("Luas    : %.2f\n", persegi.luas())
+    fmt.Printf("Keliling: %.2f\n", persegi.keliling())
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 11</h4>
+        <ul>
+            <li><strong>Soal 1:</strong> Buatlah struct <code>TodoList</code> dengan method:
+                <ul>
+                    <li><code>tambahTask(task string)</code></li>
+                    <li><code>hapusTask(index int)</code></li>
+                    <li><code>tampilkanSemua()</code></li>
+                </ul>
+            </li>
+            <li><strong>Soal 2:</strong> Buatlah struct <code>Calculator</code> dengan field <code>Result float64</code> dan method:
+                <ul>
+                    <li><code>add(n float64)</code></li>
+                    <li><code>subtract(n float64)</code></li>
+                    <li><code>multiply(n float64)</code></li>
+                    <li><code>divide(n float64)</code></li>
+                    <li><code>getResult() float64</code></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Kapan Menggunakan Pointer Receiver?</h4>
+        <p>Gunakan pointer receiver ketika:</p>
+        <ul>
+            <li>✓ Method perlu mengubah nilai struct</li>
+            <li>✓ Struct berukuran besar (efisiensi)</li>
+            <li>✓ Ingin konsisten dengan method lain yang pakai pointer</li>
+        </ul>
+        <p>Gunakan value receiver ketika:</p>
+        <ul>
+            <li>✓ Method hanya membaca data</li>
+            <li>✓ Struct kecil dan simple</li>
+            <li>✓ Ingin immutable behavior</li>
+        </ul>
+    </div>
+</section>

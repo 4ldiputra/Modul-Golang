@@ -1,0 +1,253 @@
+<section id="percabangan" class="section active">
+    <h2>4. Percabangan (Conditional)</h2>
+    
+    <h3>4.1 IF Statement</h3>
+    <div class="highlight">
+        <p><strong>IF</strong> digunakan untuk menjalankan kode jika kondisi tertentu terpenuhi (true).</p>
+    </div>
+
+    <h4>Syntax Dasar:</h4>
+    <div class="code-block">if kondisi {
+    // kode yang dijalankan jika kondisi true
+}</div>
+
+    <h4>Contoh Program:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    nilai := 85
+    
+    if nilai >= 75 {
+        fmt.Println("Selamat! Anda LULUS")
+    }
+}</div>
+
+    <h3>4.2 IF-ELSE Statement</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    nilai := 65
+    
+    if nilai >= 75 {
+        fmt.Println("LULUS")
+    } else {
+        fmt.Println("TIDAK LULUS")
+    }
+}</div>
+
+    <h3>4.3 IF-ELSE IF-ELSE</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    nilai := 85
+    
+    if nilai >= 90 {
+        fmt.Println("Grade: A")
+    } else if nilai >= 80 {
+        fmt.Println("Grade: B")
+    } else if nilai >= 70 {
+        fmt.Println("Grade: C")
+    } else if nilai >= 60 {
+        fmt.Println("Grade: D")
+    } else {
+        fmt.Println("Grade: E")
+    }
+}</div>
+
+    <h3>4.4 Nested IF (IF Bersarang)</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    nilai := 85
+    kehadiran := 80
+    
+    if nilai >= 75 {
+        if kehadiran >= 75 {
+            fmt.Println("LULUS dengan kehadiran baik")
+        } else {
+            fmt.Println("LULUS tapi kehadiran kurang")
+        }
+    } else {
+        fmt.Println("TIDAK LULUS")
+    }
+}</div>
+
+    <h3>4.5 IF dengan Short Statement</h3>
+    <p>Go memungkinkan deklarasi variabel langsung di dalam IF:</p>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Deklarasi dan cek dalam satu baris
+    if nilai := 85; nilai >= 75 {
+        fmt.Println("Nilai:", nilai, "- LULUS")
+    } else {
+        fmt.Println("Nilai:", nilai, "- TIDAK LULUS")
+    }
+    
+    // nilai tidak bisa diakses di luar if
+    // fmt.Println(nilai) // ERROR!
+}</div>
+
+    <h3>4.6 SWITCH Statement</h3>
+    <div class="highlight">
+        <p><strong>SWITCH</strong> adalah alternatif dari multiple IF-ELSE, lebih rapi dan mudah dibaca.</p>
+    </div>
+
+    <h4>Contoh Switch Dasar:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    hari := 3
+    
+    switch hari {
+    case 1:
+        fmt.Println("Senin")
+    case 2:
+        fmt.Println("Selasa")
+    case 3:
+        fmt.Println("Rabu")
+    case 4:
+        fmt.Println("Kamis")
+    case 5:
+        fmt.Println("Jumat")
+    case 6:
+        fmt.Println("Sabtu")
+    case 7:
+        fmt.Println("Minggu")
+    default:
+        fmt.Println("Hari tidak valid")
+    }
+}</div>
+
+    <h3>4.7 Switch dengan Multiple Case</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    hari := "Sabtu"
+    
+    switch hari {
+    case "Senin", "Selasa", "Rabu", "Kamis", "Jumat":
+        fmt.Println("Hari kerja")
+    case "Sabtu", "Minggu":
+        fmt.Println("Hari libur")
+    default:
+        fmt.Println("Hari tidak valid")
+    }
+}</div>
+
+    <h3>4.8 Switch dengan Kondisi</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    nilai := 85
+    
+    switch {
+    case nilai >= 90:
+        fmt.Println("Grade: A")
+    case nilai >= 80:
+        fmt.Println("Grade: B")
+    case nilai >= 70:
+        fmt.Println("Grade: C")
+    case nilai >= 60:
+        fmt.Println("Grade: D")
+    default:
+        fmt.Println("Grade: E")
+    }
+}</div>
+
+    <h3>4.9 Contoh Kasus Lengkap: Sistem Penilaian</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var nama string
+    var nilaiTugas, nilaiUTS, nilaiUAS float64
+    
+    fmt.Print("Masukkan nama: ")
+    fmt.Scan(&nama)
+    fmt.Print("Nilai Tugas (0-100): ")
+    fmt.Scan(&nilaiTugas)
+    fmt.Print("Nilai UTS (0-100): ")
+    fmt.Scan(&nilaiUTS)
+    fmt.Print("Nilai UAS (0-100): ")
+    fmt.Scan(&nilaiUAS)
+    
+    // Hitung nilai akhir (Tugas 30%, UTS 30%, UAS 40%)
+    nilaiAkhir := (nilaiTugas * 0.3) + (nilaiUTS * 0.3) + (nilaiUAS * 0.4)
+    
+    fmt.Println("\n===== HASIL PENILAIAN =====")
+    fmt.Println("Nama        :", nama)
+    fmt.Println("Nilai Tugas :", nilaiTugas)
+    fmt.Println("Nilai UTS   :", nilaiUTS)
+    fmt.Println("Nilai UAS   :", nilaiUAS)
+    fmt.Printf("Nilai Akhir : %.2f\n", nilaiAkhir)
+    
+    // Tentukan grade
+    var grade string
+    switch {
+    case nilaiAkhir >= 90:
+        grade = "A"
+    case nilaiAkhir >= 80:
+        grade = "B"
+    case nilaiAkhir >= 70:
+        grade = "C"
+    case nilaiAkhir >= 60:
+        grade = "D"
+    default:
+        grade = "E"
+    }
+    
+    fmt.Println("Grade       :", grade)
+    
+    // Tentukan kelulusan
+    if nilaiAkhir >= 70 {
+        fmt.Println("Status      : LULUS ✓")
+    } else {
+        fmt.Println("Status      : TIDAK LULUS ✗")
+    }
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 4</h4>
+        <p>Buatlah program kalkulator BMI (Body Mass Index):</p>
+        <ul>
+            <li>Input: berat (kg) dan tinggi (meter)</li>
+            <li>Rumus: BMI = berat / (tinggi * tinggi)</li>
+            <li>Kategori:
+                <ul>
+                    <li>BMI < 18.5: Kurus</li>
+                    <li>18.5 - 24.9: Normal</li>
+                    <li>25 - 29.9: Gemuk</li>
+                    <li>≥ 30: Obesitas</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Tips Percabangan:</h4>
+        <ul>
+            <li>Gunakan <code>switch</code> jika ada banyak kondisi yang membandingkan nilai yang sama</li>
+            <li>Gunakan <code>if-else</code> untuk kondisi yang lebih kompleks</li>
+            <li>Di Go, tidak perlu <code>break</code> di switch (otomatis break)</li>
+            <li>Gunakan <code>fallthrough</code> jika ingin lanjut ke case berikutnya</li>
+        </ul>
+    </div>
+</section>

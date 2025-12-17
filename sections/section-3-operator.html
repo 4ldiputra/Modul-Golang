@@ -1,0 +1,267 @@
+<section id="operator" class="section active">
+    <h2>3. Operator di Go</h2>
+    
+    <h3>3.1 Operator Aritmatika</h3>
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Operator</th>
+                <th>Nama</th>
+                <th>Contoh</th>
+                <th>Hasil</th>
+            </tr>
+            <tr>
+                <td>+</td>
+                <td>Penjumlahan</td>
+                <td>5 + 3</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>-</td>
+                <td>Pengurangan</td>
+                <td>5 - 3</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>*</td>
+                <td>Perkalian</td>
+                <td>5 * 3</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>/</td>
+                <td>Pembagian</td>
+                <td>10 / 2</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>%</td>
+                <td>Modulus (Sisa Bagi)</td>
+                <td>10 % 3</td>
+                <td>1</td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>Contoh Program:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    a := 10
+    b := 3
+    
+    fmt.Println("a + b =", a + b)  // 13
+    fmt.Println("a - b =", a - b)  // 7
+    fmt.Println("a * b =", a * b)  // 30
+    fmt.Println("a / b =", a / b)  // 3
+    fmt.Println("a % b =", a % b)  // 1
+}</div>
+
+    <h3>3.2 Operator Perbandingan</h3>
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Operator</th>
+                <th>Nama</th>
+                <th>Contoh</th>
+                <th>Hasil</th>
+            </tr>
+            <tr>
+                <td>==</td>
+                <td>Sama dengan</td>
+                <td>5 == 5</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>!=</td>
+                <td>Tidak sama dengan</td>
+                <td>5 != 3</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td>></td>
+                <td>Lebih besar</td>
+                <td>5 > 3</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td><</td>
+                <td>Lebih kecil</td>
+                <td>5 < 3</td>
+                <td>false</td>
+            </tr>
+            <tr>
+                <td>>=</td>
+                <td>Lebih besar atau sama dengan</td>
+                <td>5 >= 5</td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td><=</td>
+                <td>Lebih kecil atau sama dengan</td>
+                <td>3 <= 5</td>
+                <td>true</td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>Contoh Program:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    nilai := 85
+    nilaiLulus := 75
+    
+    fmt.Println("Nilai >= Lulus?", nilai >= nilaiLulus)  // true
+    fmt.Println("Nilai == 100?", nilai == 100)           // false
+    fmt.Println("Nilai != 0?", nilai != 0)                // true
+}</div>
+
+    <h3>3.3 Operator Logika</h3>
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Operator</th>
+                <th>Nama</th>
+                <th>Keterangan</th>
+            </tr>
+            <tr>
+                <td>&&</td>
+                <td>AND (dan)</td>
+                <td>true jika SEMUA kondisi true</td>
+            </tr>
+            <tr>
+                <td>||</td>
+                <td>OR (atau)</td>
+                <td>true jika SALAH SATU kondisi true</td>
+            </tr>
+            <tr>
+                <td>!</td>
+                <td>NOT (tidak)</td>
+                <td>Membalik nilai boolean</td>
+            </tr>
+        </table>
+    </div>
+
+    <h4>Contoh Program:</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    umur := 20
+    punyaKTP := true
+    
+    // AND (&&)
+    bisaNyoblos := umur >= 17 && punyaKTP
+    fmt.Println("Bisa nyoblos?", bisaNyoblos)
+    
+    // OR (||)
+    sudahDewasa := umur >= 17 || umur >= 18
+    fmt.Println("Sudah dewasa?", sudahDewasa)
+    
+    // NOT (!)
+    belumDewasa := !(umur >= 17)
+    fmt.Println("Belum dewasa?", belumDewasa)
+}</div>
+
+    <h3>3.4 Operator Assignment</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    x := 10
+    
+    x += 5   // x = x + 5
+    fmt.Println("x += 5  :", x)  // 15
+    
+    x -= 3   // x = x - 3
+    fmt.Println("x -= 3  :", x)  // 12
+    
+    x *= 2   // x = x * 2
+    fmt.Println("x *= 2  :", x)  // 24
+    
+    x /= 4   // x = x / 4
+    fmt.Println("x /= 4  :", x)  // 6
+    
+    x %= 5   // x = x % 5
+    fmt.Println("x %= 5  :", x)  // 1
+}</div>
+
+    <h3>3.5 Increment dan Decrement</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    angka := 5
+    
+    angka++  // angka = angka + 1
+    fmt.Println("Setelah ++:", angka)  // 6
+    
+    angka--  // angka = angka - 1
+    fmt.Println("Setelah --:", angka)  // 5
+}</div>
+
+    <h3>3.6 Contoh Kasus: Kalkulator Sederhana</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var angka1, angka2 float64
+    var operator string
+    
+    fmt.Print("Masukkan angka pertama: ")
+    fmt.Scan(&angka1)
+    
+    fmt.Print("Masukkan operator (+, -, *, /): ")
+    fmt.Scan(&operator)
+    
+    fmt.Print("Masukkan angka kedua: ")
+    fmt.Scan(&angka2)
+    
+    fmt.Println("\n===== HASIL =====")
+    
+    if operator == "+" {
+        fmt.Println(angka1, "+", angka2, "=", angka1 + angka2)
+    } else if operator == "-" {
+        fmt.Println(angka1, "-", angka2, "=", angka1 - angka2)
+    } else if operator == "*" {
+        fmt.Println(angka1, "*", angka2, "=", angka1 * angka2)
+    } else if operator == "/" {
+        if angka2 != 0 {
+            fmt.Println(angka1, "/", angka2, "=", angka1 / angka2)
+        } else {
+            fmt.Println("Error: Tidak bisa dibagi 0!")
+        }
+    } else {
+        fmt.Println("Operator tidak valid!")
+    }
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 3</h4>
+        <p>Buatlah program yang menghitung:</p>
+        <ul>
+            <li>Luas persegi panjang (panjang × lebar)</li>
+            <li>Keliling persegi panjang (2 × (panjang + lebar))</li>
+        </ul>
+        <p>Input: panjang dan lebar dari user</p>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Tips Operator:</h4>
+        <ul>
+            <li>Pembagian integer menghasilkan integer: <code>5 / 2 = 2</code></li>
+            <li>Untuk hasil desimal, gunakan float: <code>5.0 / 2.0 = 2.5</code></li>
+            <li>Operator <code>%</code> hanya untuk integer</li>
+            <li>Go tidak punya operator <code>**</code> untuk pangkat, gunakan <code>math.Pow()</code></li>
+        </ul>
+    </div>
+</section>

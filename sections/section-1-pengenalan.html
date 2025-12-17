@@ -1,0 +1,124 @@
+<section id="pengenalan" class="section active">
+    <h2>1. Pengenalan Go (Golang)</h2>
+    
+    <h3>1.1 Apa Itu Go?</h3>
+    <div class="highlight">
+        <p><strong>Go</strong> (atau Golang) adalah bahasa pemrograman open source yang dikembangkan oleh <strong>Google</strong> pada tahun 2007 dan dirilis ke publik pada tahun 2009.</p>
+        <p><strong>Pencipta Go:</strong></p>
+        <ul>
+            <li>Robert Griesemer</li>
+            <li>Rob Pike</li>
+            <li>Ken Thompson</li>
+        </ul>
+    </div>
+
+    <h3>1.2 Mengapa Belajar Go?</h3>
+    <div class="example-box">
+        <h4>Keunggulan Go:</h4>
+        <ul>
+            <li>✅ <strong>Sederhana dan Mudah Dipelajari</strong> - Syntax yang bersih dan minimal</li>
+            <li>✅ <strong>Cepat dan Efisien</strong> - Performa mendekati C/C++</li>
+            <li>✅ <strong>Concurrent Programming</strong> - Goroutines untuk multitasking</li>
+            <li>✅ <strong>Strongly Typed</strong> - Type safety yang ketat</li>
+            <li>✅ <strong>Garbage Collection</strong> - Memory management otomatis</li>
+            <li>✅ <strong>Cross Platform</strong> - Kompilasi ke berbagai OS</li>
+            <li>✅ <strong>Standard Library Lengkap</strong> - Built-in tools yang powerful</li>
+        </ul>
+    </div>
+
+    <h3>1.3 Program Go Pertama</h3>
+    <h4>Hello World dalam Go</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}</div>
+
+    <h4>Penjelasan Kode:</h4>
+    <ul>
+        <li><code>package main</code> - Setiap program Go harus memiliki package main</li>
+        <li><code>import "fmt"</code> - Import package fmt untuk formatting I/O</li>
+        <li><code>func main()</code> - Fungsi utama, entry point program</li>
+        <li><code>fmt.Println()</code> - Fungsi untuk print dengan newline</li>
+    </ul>
+
+    <h3>1.4 Struktur Program Go</h3>
+    <div class="code-block">// 1. Package declaration (wajib)
+package main
+
+// 2. Import statements
+import (
+    "fmt"
+    "math"
+)
+
+// 3. Konstanta
+const PI = 3.14
+
+// 4. Variabel global
+var nama string = "Budi"
+
+// 5. Fungsi main (entry point)
+func main() {
+    fmt.Println("Program dimulai")
+    hitungLuas()
+}
+
+// 6. Fungsi lainnya
+func hitungLuas() {
+    var r float64 = 7
+    luas := PI * r * r
+    fmt.Println("Luas lingkaran:", luas)
+}</div>
+
+    <h3>1.5 Cara Menjalankan Program Go</h3>
+    <div class="example-box">
+        <h4>Metode 1: go run (langsung jalankan)</h4>
+        <div class="code-block">go run main.go</div>
+        
+        <h4>Metode 2: go build (compile dulu)</h4>
+        <div class="code-block">go build main.go
+./main</div>
+    </div>
+
+    <h3>1.6 Input dan Output Dasar</h3>
+    <h4>Contoh Program Input-Output</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    var nama string
+    var umur int
+    
+    // Input
+    fmt.Print("Masukkan nama: ")
+    fmt.Scan(&nama)
+    
+    fmt.Print("Masukkan umur: ")
+    fmt.Scan(&umur)
+    
+    // Output
+    fmt.Println("===== DATA DIRI =====")
+    fmt.Println("Nama:", nama)
+    fmt.Println("Umur:", umur, "tahun")
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 1</h4>
+        <p>Buatlah program Go yang meminta input nama dan kota, lalu menampilkan pesan:</p>
+        <p><em>"Halo [nama], selamat datang dari [kota]!"</em></p>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Tips Belajar Go:</h4>
+        <ul>
+            <li>Selalu gunakan <code>gofmt</code> untuk format kode otomatis</li>
+            <li>Pelajari dokumentasi resmi di <a href="https://golang.org" target="_blank">golang.org</a></li>
+            <li>Praktek coding setiap hari!</li>
+            <li>Gabung komunitas Go Indonesia</li>
+        </ul>
+    </div>
+</section>

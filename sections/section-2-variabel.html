@@ -1,0 +1,200 @@
+<section id="variabel" class="section active">
+    <h2>2. Variabel dan Tipe Data</h2>
+    
+    <h3>2.1 Apa Itu Variabel?</h3>
+    <div class="highlight">
+        <p><strong>Variabel</strong> adalah tempat untuk menyimpan data di memori komputer. Setiap variabel memiliki:</p>
+        <ul>
+            <li><strong>Nama</strong> - Identifier untuk mengakses data</li>
+            <li><strong>Tipe Data</strong> - Jenis data yang disimpan</li>
+            <li><strong>Nilai</strong> - Data yang tersimpan</li>
+        </ul>
+    </div>
+
+    <h3>2.2 Cara Deklarasi Variabel</h3>
+    
+    <h4>Metode 1: Menggunakan var</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Deklarasi dengan tipe data
+    var nama string = "Budi"
+    var umur int = 25
+    var tinggi float64 = 170.5
+    
+    fmt.Println("Nama  :", nama)
+    fmt.Println("Umur  :", umur)
+    fmt.Println("Tinggi:", tinggi, "cm")
+}</div>
+
+    <h4>Metode 2: Type Inference</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Go otomatis mendeteksi tipe data
+    var nama = "Ani"      // string
+    var umur = 23         // int
+    var tinggi = 165.0    // float64
+    
+    fmt.Println(nama, umur, tinggi)
+}</div>
+
+    <h4>Metode 3: Short Declaration (:=)</h4>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Cara paling singkat dan sering dipakai
+    nama := "Citra"
+    umur := 22
+    sudahMenikah := false
+    
+    fmt.Println(nama, umur, sudahMenikah)
+}</div>
+
+    <h3>2.3 Tipe Data Dasar di Go</h3>
+    
+    <div class="table-responsive">
+        <table>
+            <tr>
+                <th>Kategori</th>
+                <th>Tipe Data</th>
+                <th>Keterangan</th>
+                <th>Contoh</th>
+            </tr>
+            <tr>
+                <td rowspan="4"><strong>Integer</strong></td>
+                <td>int8</td>
+                <td>-128 hingga 127</td>
+                <td>var x int8 = 100</td>
+            </tr>
+            <tr>
+                <td>int16</td>
+                <td>-32768 hingga 32767</td>
+                <td>var x int16 = 30000</td>
+            </tr>
+            <tr>
+                <td>int32</td>
+                <td>-2 miliar hingga 2 miliar</td>
+                <td>var x int32 = 1000000</td>
+            </tr>
+            <tr>
+                <td>int64</td>
+                <td>Sangat besar</td>
+                <td>var x int64 = 999999999</td>
+            </tr>
+            <tr>
+                <td rowspan="2"><strong>Float</strong></td>
+                <td>float32</td>
+                <td>Desimal 32-bit</td>
+                <td>var x float32 = 3.14</td>
+            </tr>
+            <tr>
+                <td>float64</td>
+                <td>Desimal 64-bit (lebih akurat)</td>
+                <td>var x float64 = 3.14159265359</td>
+            </tr>
+            <tr>
+                <td><strong>String</strong></td>
+                <td>string</td>
+                <td>Teks</td>
+                <td>var nama string = "Golang"</td>
+            </tr>
+            <tr>
+                <td><strong>Boolean</strong></td>
+                <td>bool</td>
+                <td>true atau false</td>
+                <td>var aktif bool = true</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>2.4 Contoh Program Lengkap</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Data mahasiswa
+    nim := "2024001"
+    nama := "Siti Nurhaliza"
+    umur := 20
+    ipk := 3.85
+    aktif := true
+    
+    // Tampilkan data
+    fmt.Println("===== DATA MAHASISWA =====")
+    fmt.Println("NIM   :", nim)
+    fmt.Println("Nama  :", nama)
+    fmt.Println("Umur  :", umur, "tahun")
+    fmt.Println("IPK   :", ipk)
+    fmt.Println("Status:", aktif)
+}</div>
+
+    <h3>2.5 Multiple Variable Declaration</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Deklarasi banyak variabel sekaligus
+    var (
+        nama    = "Budi"
+        umur    = 25
+        kota    = "Jakarta"
+        menikah = false
+    )
+    
+    // Atau dengan short declaration
+    x, y, z := 10, 20, 30
+    
+    fmt.Println(nama, umur, kota, menikah)
+    fmt.Println(x, y, z)
+}</div>
+
+    <h3>2.6 Konstanta</h3>
+    <div class="code-block">package main
+
+import "fmt"
+
+func main() {
+    // Konstanta tidak bisa diubah
+    const PI = 3.14159
+    const NAMA_APLIKASI = "Sistem Perpustakaan"
+    const VERSI = 1.0
+    
+    fmt.Println("Aplikasi:", NAMA_APLIKASI)
+    fmt.Println("Versi   :", VERSI)
+    fmt.Println("Nilai PI:", PI)
+    
+    // PI = 3.14  // ERROR! Tidak bisa ubah konstanta
+}</div>
+
+    <div class="exercise-box">
+        <h4>Latihan 2</h4>
+        <p>Buatlah program yang menyimpan data:</p>
+        <ul>
+            <li>Nama produk (string)</li>
+            <li>Harga (int)</li>
+            <li>Diskon dalam persen (float64)</li>
+            <li>Tersedia (bool)</li>
+        </ul>
+        <p>Kemudian tampilkan semua data tersebut!</p>
+    </div>
+
+    <div class="highlight">
+        <h4>💡 Tips Penting:</h4>
+        <ul>
+            <li>Gunakan <code>:=</code> untuk deklarasi singkat di dalam fungsi</li>
+            <li>Gunakan <code>var</code> untuk variabel global atau eksplisit tipe</li>
+            <li>Nama variabel harus dimulai dengan huruf atau underscore</li>
+            <li>Go bersifat case-sensitive: <code>nama</code> ≠ <code>Nama</code></li>
+            <li>Variabel yang tidak dipakai akan error saat compile</li>
+        </ul>
+    </div>
+</section>

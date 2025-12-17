@@ -1,0 +1,374 @@
+<section id="proyek" class="section active">
+    <h2>12. Proyek Akhir: Sistem Manajemen Toko</h2>
+    
+    <h3>12.1 Deskripsi Proyek</h3>
+    <div class="highlight">
+        <h4>Sistem Manajemen Toko Sederhana</h4>
+        <p>Buatlah aplikasi command-line untuk mengelola toko dengan fitur:</p>
+        <ul>
+            <li>✅ Manajemen Produk (Tambah, Lihat, Update, Hapus)</li>
+            <li>✅ Manajemen Stok</li>
+            <li>✅ Transaksi Penjualan</li>
+            <li>✅ Laporan Penjualan</li>
+        </ul>
+    </div>
+
+    <h3>12.2 Kode Lengkap Proyek</h3>
+    <div class="code-block">package main
+
+import (
+    "fmt"
+    "time"
+)
+
+// ========== STRUCT DEFINITIONS ==========
+
+type Product struct {
+    ID    string
+    Name  string
+    Price float64
+    Stock int
+}
+
+type Transaction struct {
+    ID          string
+    ProductID   string
+    ProductName string
+    Quantity    int
+    Total       float64
+    Date        time.Time
+}
+
+type Store struct {
+    Products     map[string]*Product
+    Transactions []Transaction
+    NextProdID   int
+    NextTransID  int
+}
+
+// ========== PRODUCT METHODS ==========
+
+func (s *Store) tambahProduk() {
+    var name string
+    var price float64
+    var stock int
+    
+    fmt.Print("\nNama Produk: ")
+    fmt.Scan(&name)
+    fmt.Print("Harga: Rp ")
+    fmt.Scan(&price)
+    fmt.Print("Stok: ")
+    fmt.Scan(&stock)
+    
+    id := fmt.Sprintf("P%03d", s.NextProdID)
+    s.NextProdID++
+    
+    s.Products[id] = &Product{
+        ID:    id,
+        Name:  name,
+        Price: price,
+        Stock: stock,
+    }
+    
+    fmt.Printf("\n✓ Produk %s berhasil ditambahkan dengan ID: %s\n", name, id)
+}
+
+func (s *Store) lihatProduk() {
+    if len(s.Products) == 0 {
+        fmt.Println("\n✗ Tidak ada produk")
+        return
+    }
+    
+    fmt.Println("\n===== DAFTAR PRODUK =====")
+    fmt.Printf("%-8s %-20s %12s %8s\n", "ID", "Nama", "Harga", "Stok")
+    fmt.Println("-------------------------------------------------------")
+    
+    for _, p := range s.Products {
+        fmt.Printf("%-8s %-20s Rp %9.0f %8d\n", p.ID, p.Name, p.Price, p.Stock)
+    }
+}
+
+func (s *Store) updateStok() {
+    var id string
+    var jumlah int
+    
+    s.lihatProduk()
+    
+    fmt.Print("\nID Produk: ")
+    fmt.Scan(&id)
+    
+    product, exists := s.Products[id]
+    if !exists {
+        fmt.Println("✗ Produk tidak ditemukan!")
+        return
+    }
+    
+    fmt.Printf("Stok saat ini: %d\n", product.Stock)
+    fmt.Print("Tambah stok: ")
+    fmt.Scan(&jumlah)
+    
+    product.Stock += jumlah
+    fmt.Printf("✓ Stok %s berhasil diupdate. Stok baru: %d\n", product.Name, product.Stock)
+}
+
+func (s *Store) hapusProduk() {
+    var id string
+    
+    s.lihatProduk()
+    
+    fmt.Print("\nID Produk yang akan dihapus: ")
+    fmt.Scan(&id)
+    
+    product, exists := s.Products[id]
+    if !exists {
+        fmt.Println("✗ Produk tidak ditemukan!")
+        return
+    }
+    
+    delete(s.Products, id)
+    fmt.Printf("✓ Produk %s berhasil dihapus\n", product.Name)
+}
+
+// ========== TRANSACTION METHODS ==========
+
+func (s *Store) buatTransaksi() {
+    var id string
+    var qty int
+    
+    s.lihatProduk()
+    
+    fmt.Print("\nID Produk: ")
+    fmt.Scan(&id)
+    
+    product, exists := s.Products[id]
+    if !exists {
+        fmt.Println("✗ Produk tidak ditemukan!")
+        return
+    }
+    
+    fmt.Printf("Stok tersedia: %d\n", product.Stock)
+    fmt.Print("Jumlah beli: ")
+    fmt.Scan(&qty)
+    
+    if product.Stock < qty {
+        fmt.Println("✗ Stok tidak cukup!")
+        return
+    }
+    
+    // Update stok
+    product.Stock -= qty
+    
+    // Buat transaksi
+    transID := fmt.Sprintf("T%03d", s.NextTransID)
+    s.NextTransID++
+    
+    total := float64(qty) * product.Price
+    
+    transaction := Transaction{
+        ID:          transID,
+        ProductID:   product.ID,
+        ProductName: product.Name,
+        Quantity:    qty,
+        Total:       total,
+        Date:        time.Now(),
+    }
+    
+    s.Transactions = append(s.Transactions, transaction)
+    
+    fmt.Println("\n===== STRUK PEMBELIAN =====")
+    fmt.Println("ID Transaksi:", transaction.ID)
+    fmt.Println("Produk      :", transaction.ProductName)
+    fmt.Println("Jumlah      :", transaction.Quantity)
+    fmt.Printf("Harga Satuan: Rp %.0f\n", product.Price)
+    fmt.Printf("Total       : Rp %.0f\n", transaction.Total)
+    fmt.Println("Tanggal     :", transaction.Date.Format("02/01/2006 15:04"))
+    fmt.Println("===========================")
+    fmt.Println("✓ Transaksi berhasil!")
+}
+
+func (s *Store) lihatTransaksi() {
+    if len(s.Transactions) == 0 {
+        fmt.Println("\n✗ Belum ada transaksi")
+        return
+    }
+    
+    fmt.Println("\n===== RIWAYAT TRANSAKSI =====")
+    fmt.Printf("%-8s %-8s %-20s %5s %12s %16s\n", 
+        "Trans ID", "Prod ID", "Produk", "Qty", "Total", "Tanggal")
+    fmt.Println("--------------------------------------------------------------------------------")
+    
+    totalPenjualan := 0.0
+    for _, t := range s.Transactions {
+        fmt.Printf("%-8s %-8s %-20s %5d Rp %9.0f %16s\n",
+            t.ID, t.ProductID, t.ProductName, t.Quantity, t.Total,
+            t.Date.Format("02/01/06 15:04"))
+        totalPenjualan += t.Total
+    }
+    
+    fmt.Println("================================================================================")
+    fmt.Printf("Total Penjualan: Rp %.0f\n", totalPenjualan)
+}
+
+func (s *Store) laporanHarian() {
+    today := time.Now()
+    todayStr := today.Format("02/01/2006")
+    
+    fmt.Printf("\n===== LAPORAN PENJUALAN %s =====\n", todayStr)
+    
+    totalPenjualan := 0.0
+    jumlahTransaksi := 0
+    
+    for _, t := range s.Transactions {
+        if t.Date.Format("02/01/2006") == todayStr {
+            fmt.Printf("%s - %s (%d) = Rp %.0f\n", 
+                t.ID, t.ProductName, t.Quantity, t.Total)
+            totalPenjualan += t.Total
+            jumlahTransaksi++
+        }
+    }
+    
+    if jumlahTransaksi == 0 {
+        fmt.Println("Belum ada transaksi hari ini")
+    } else {
+        fmt.Println("==========================================")
+        fmt.Printf("Jumlah Transaksi: %d\n", jumlahTransaksi)
+        fmt.Printf("Total Penjualan : Rp %.0f\n", totalPenjualan)
+    }
+}
+
+// ========== MAIN PROGRAM ==========
+
+func (s *Store) tampilkanMenu() {
+    fmt.Println("\n╔════════════════════════════════════╗")
+    fmt.Println("║   SISTEM MANAJEMEN TOKO v1.0       ║")
+    fmt.Println("╠════════════════════════════════════╣")
+    fmt.Println("║  MANAJEMEN PRODUK:                 ║")
+    fmt.Println("║  1. Tambah Produk                  ║")
+    fmt.Println("║  2. Lihat Semua Produk             ║")
+    fmt.Println("║  3. Update Stok Produk             ║")
+    fmt.Println("║  4. Hapus Produk                   ║")
+    fmt.Println("║                                    ║")
+    fmt.Println("║  TRANSAKSI:                        ║")
+    fmt.Println("║  5. Buat Transaksi Penjualan       ║")
+    fmt.Println("║  6. Lihat Riwayat Transaksi        ║")
+    fmt.Println("║                                    ║")
+    fmt.Println("║  LAPORAN:                          ║")
+    fmt.Println("║  7. Laporan Penjualan Hari Ini     ║")
+    fmt.Println("║                                    ║")
+    fmt.Println("║  0. Keluar                         ║")
+    fmt.Println("╚════════════════════════════════════╝")
+    fmt.Print("\nPilih menu: ")
+}
+
+func main() {
+    store := Store{
+        Products:     make(map[string]*Product),
+        Transactions: []Transaction{},
+        NextProdID:   1,
+        NextTransID:  1,
+    }
+    
+    // Sample data
+    store.Products["P001"] = &Product{"P001", "Buku Tulis", 5000, 100}
+    store.Products["P002"] = &Product{"P002", "Pulpen", 3000, 200}
+    store.Products["P003"] = &Product{"P003", "Penghapus", 2000, 150}
+    store.NextProdID = 4
+    
+    for {
+        store.tampilkanMenu()
+        
+        var pilihan int
+        fmt.Scan(&pilihan)
+        
+        switch pilihan {
+        case 1:
+            store.tambahProduk()
+        case 2:
+            store.lihatProduk()
+        case 3:
+            store.updateStok()
+        case 4:
+            store.hapusProduk()
+        case 5:
+            store.buatTransaksi()
+        case 6:
+            store.lihatTransaksi()
+        case 7:
+            store.laporanHarian()
+        case 0:
+            fmt.Println("\n✓ Terima kasih telah menggunakan sistem ini!")
+            return
+        default:
+            fmt.Println("\n✗ Pilihan tidak valid!")
+        }
+        
+        fmt.Print("\nTekan Enter untuk melanjutkan...")
+        fmt.Scanln()
+        fmt.Scanln()
+    }
+}</div>
+
+    <h3>12.3 Fitur-fitur yang Digunakan</h3>
+    <div class="example-box">
+        <h4>Konsep Go yang Diterapkan:</h4>
+        <ul>
+            <li>✅ <strong>Struct</strong> - Product, Transaction, Store</li>
+            <li>✅ <strong>Method</strong> - Method untuk Store dengan pointer receiver</li>
+            <li>✅ <strong>Map</strong> - Menyimpan produk dengan ID sebagai key</li>
+            <li>✅ <strong>Slice</strong> - Menyimpan riwayat transaksi</li>
+            <li>✅ <strong>Loop</strong> - Menu aplikasi dan iterasi data</li>
+            <li>✅ <strong>Percabangan</strong> - Switch untuk menu, if untuk validasi</li>
+            <li>✅ <strong>Function</strong> - Method terorganisir per fitur</li>
+            <li>✅ <strong>Time Package</strong> - Tracking tanggal transaksi</li>
+        </ul>
+    </div>
+
+    <h3>12.4 Cara Menjalankan Proyek</h3>
+    <div class="code-block">1. Buat file: main.go
+2. Copy paste kode di atas
+3. Jalankan: go run main.go
+4. Pilih menu sesuai kebutuhan</div>
+
+    <h3>12.5 Ide Pengembangan Lanjutan</h3>
+    <div class="exercise-box">
+        <h4>Tantangan Tambahan:</h4>
+        <ul>
+            <li>📌 Simpan data ke file (persistence)</li>
+            <li>📌 Tambahkan kategori produk</li>
+            <li>📌 Sistem diskon dan promo</li>
+            <li>📌 Laporan penjualan per bulan</li>
+            <li>📌 Export laporan ke CSV</li>
+            <li>📌 Autentikasi user (admin/kasir)</li>
+            <li>📌 Pencarian produk</li>
+            <li>📌 Grafik penjualan (menggunakan library)</li>
+        </ul>
+    </div>
+
+    <div class="highlight">
+        <h4>🎉 Selamat!</h4>
+        <p>Anda telah menyelesaikan Modul Pemrograman Dasar Golang!</p>
+        <p><strong>Yang telah Anda pelajari:</strong></p>
+        <ul>
+            <li>✓ Pengenalan Go dan setup</li>
+            <li>✓ Variabel, tipe data, dan operator</li>
+            <li>✓ Percabangan dan perulangan</li>
+            <li>✓ Array, Slice, dan Map</li>
+            <li>✓ Struct dan Komposisi</li>
+            <li>✓ Fungsi, Pointer, dan Method</li>
+            <li>✓ Membuat aplikasi lengkap</li>
+        </ul>
+        
+        <p style="margin-top: 20px;"><strong>Langkah Selanjutnya:</strong></p>
+        <ul>
+            <li>🚀 Pelajari Goroutines dan Concurrency</li>
+            <li>🚀 Belajar Database (MySQL/PostgreSQL)</li>
+            <li>🚀 Web Development dengan Go (Gin/Echo)</li>
+            <li>🚀 RESTful API Development</li>
+            <li>🚀 Testing di Go</li>
+        </ul>
+        
+        <p style="margin-top: 20px; font-size: 1.2em; text-align: center;">
+            <strong>Terus berlatih dan selamat coding! 💻🎯</strong>
+        </p>
+    </div>
+</section>
